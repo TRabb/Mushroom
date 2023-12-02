@@ -4,8 +4,9 @@ class_name PathGenerator
 var _grid_length:int
 var _grid_height:int
 var _path: Array[Vector2i]
+var _percentForDirectionChance:float
 
-var rng = RandomNumberGenerator.new()
+var _rng = RandomNumberGenerator.new()
 
 func _init(length:int, height:int):
 	_grid_length = length
@@ -18,10 +19,11 @@ func generate_path():
 	
 	#path start position
 	var x = -1
-	var y = rng.randi_range(0,21)
+	var y = _rng.randi_range(0,21)
 
 	#start making path
 	while x < _grid_length:
+		var counter:int
 		if not _path.has(Vector2i(x,y)):
 			_path.append(Vector2i(x,y))
 		
@@ -30,15 +32,17 @@ func generate_path():
 		#path goes right
 		if choice == 0 or x % 2 == 0:
 			x += 1
-		#path goes up
-		elif choice == 1 and y < _grid_height:
+		#path goes up - can not pick this if there is a path ahead of it
+		elif choice == 1 and y < _grid_height and not _path.has(Vector2i(x,y+1)):
 			y += 1
-		#path goes down		
-		elif choice == 2 and y > 0:
+		#path goes down - can not pick this if there is a path ahead of it
+		elif choice == 2 and y > 1 and not _path.has(Vector2i(x,y-1)):
 			y -= 1
+		counter +=1
+	return _path
+	
+func get_path () -> Array[Vector2i]:
 	return _path
 	
 #TO DO
-#give path a default distance it must go before picking a direction
-#	 ^^^^ variable that once > a certain number there is a % change the path goes a different direction
-#do not allow path to go back on itself - array to remember which direction the path just went
+#give path a default distance it must go before picking a direction - feels pretty good right now
