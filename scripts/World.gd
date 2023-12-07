@@ -10,7 +10,7 @@ extends Node2D
 #size of map - can measure 2d to get size in units
 #length is +1 to the actual size of map to make path look like it goes off the map
 @export var map_length:int = 41
-@export var map_height:int = 28
+@export var map_height:int = 18
 @export var speed = 100
 
 var _path:Array[Vector2i] = []
@@ -63,4 +63,4 @@ func _create_curve2d():
 		
 func _button_pressed():
 	print(get_tree().reload_current_scene())
-	print("Pressed!!")
+	print("Scene Reloaded")

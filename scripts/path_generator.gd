@@ -1,6 +1,5 @@
 #TO DO
-#give path a default distance it must go before picking a direction - feels pretty good right now
-# require the first path generation to be to the right, since it starts at x=-1 potential for long path off screen
+# prevent long corridors - force change after a while
 extends Object
 class_name PathGenerator
 
@@ -22,23 +21,26 @@ func generate_path():
 	
 	#path start position
 	var x = -1
-	var y = _rng.randi_range(0,21)
+	var y = _rng.randi_range(0,17)
 	
 	#reset counter
 	counter = 0
-	
+	var choice:int = randi_range(0,2)
 	#start making path
 	while x < _grid_length:
 		
 		if not _path.has(Vector2i(x,y)):
 			_path.append(Vector2i(x,y))
 		
-		var choice:int = randi_range(0,2)
-		
-		#for path right for the first tile
+		#force the path right for the first tile
 		if counter == 0:
 			choice = 0
-			
+		
+		#75% chance to roll for a new path direction after the 3rd move in a direction
+		if counter % 3 == 0 and not counter == 0:
+			if _rng.randi_range(0,100) < 75:
+				choice = randi_range(0,2)	
+				
 		#path goes right - x % 2 prevents creating turns with no gap
 		if choice == 0 or x % 2 == 0:
 			x += 1

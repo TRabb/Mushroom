@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_gmu0c"]
 [ext_resource type="Texture2D" uid="uid://cjb3j2k3b7mj5" path="res://assets/RandomLevelGenTileset.png" id="2_2dc1x"]
 [ext_resource type="Texture2D" uid="uid://b14gwglifwtoo" path="res://assets/grass_tile.png" id="3_1wirw"]
-[ext_resource type="Texture2D" uid="uid://b4rir8hgy8wgr" path="res://icon.svg" id="4_rhuak"]
+[ext_resource type="PackedScene" uid="uid://cyvwwrwii4n8b" path="res://scenes/Enemy.tscn" id="4_kmvj5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_80bli"]
 texture = ExtResource("2_2dc1x")
@@ -491,14 +491,10 @@ curve = SubResource("Curve2D_7km6y")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="EnemyDirections"]
 
-[node name="Sprite2D" type="Sprite2D" parent="EnemyDirections/PathFollow2D"]
-position = Vector2(-8, -8)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("4_rhuak")
-centered = false
+[node name="EnemyBody" parent="EnemyDirections/PathFollow2D" instance=ExtResource("4_kmvj5")]
 
 [node name="Button" type="Button" parent="."]
-offset_left = 1184.0
-offset_top = 800.0
-offset_right = 1248.0
-offset_bottom = 864.0
+offset_left = 1152.0
+offset_top = 608.0
+offset_right = 1216.0
+offset_bottom = 672.0
