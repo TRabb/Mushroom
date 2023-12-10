@@ -59,3 +59,4 @@ func generate_path():
 func get_path_route() -> Array[Vector2i]:
 	return _path
 
+
