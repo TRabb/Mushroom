@@ -1,18 +1,18 @@
 #TO DO
 # prevent long corridors - force change after a while
-extends Object
+extends Node
 class_name PathGenerator
 
-var _grid_length:int
-var _grid_height:int
 var _path: Array[Vector2i]
+
+const path_config:PathGeneratorConfig = preload("res://resources/basic_path_config.res")
+
+#helper variables
+var _rng = RandomNumberGenerator.new()
 var counter:int = 0
 
-var _rng = RandomNumberGenerator.new()
-
-func _init(length:int, height:int):
-	_grid_length = length
-	_grid_height = height
+func _init():
+	generate_path()
 	
 func generate_path():
 	randomize()
@@ -27,7 +27,7 @@ func generate_path():
 	counter = 0
 	var choice:int = randi_range(0,2)
 	#start making path
-	while x < _grid_length:
+	while x < path_config.map_length:
 		
 		if not _path.has(Vector2i(x,y)):
 			_path.append(Vector2i(x,y))
@@ -45,7 +45,7 @@ func generate_path():
 		if choice == 0 or x % 2 == 0:
 			x += 1
 		#path goes down - can not pick this if there is already a path down
-		elif choice == 1 and y < (_grid_height - 1) and not _path.has(Vector2i(x,y+1)):
+		elif choice == 1 and y < (path_config.map_height - 1) and not _path.has(Vector2i(x,y+1)):
 			y += 1
 		#path goes up - can not pick this if there is already a path up
 		elif choice == 2 and y > 2 and not _path.has(Vector2i(x,y-1)):
@@ -56,6 +56,6 @@ func generate_path():
 		counter +=1
 	return _path
 	
-func get_path () -> Array[Vector2i]:
+func get_path_route() -> Array[Vector2i]:
 	return _path
 

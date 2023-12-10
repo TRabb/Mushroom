@@ -1,12 +1,50 @@
-[gd_scene load_steps=2 format=3 uid="uid://cyvwwrwii4n8b"]
+[gd_scene load_steps=7 format=3 uid="uid://cyvwwrwii4n8b"]
 
+[ext_resource type="Script" path="res://scripts/basic_enemy.gd" id="1_x5xcr"]
 [ext_resource type="Texture2D" uid="uid://b4rir8hgy8wgr" path="res://icon.svg" id="2_ta238"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_51pnb"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_mar4c"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_ttf7q"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_rgrgh"]
 
 [node name="EnemyBody" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
+script = ExtResource("1_x5xcr")
 
-[node name="Enemy" type="Sprite2D" parent="."]
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("3_51pnb")
+
+[node name="CompoundState" type="Node" parent="StateChart"]
+script = ExtResource("4_mar4c")
+initial_state = NodePath("Spawning")
+
+[node name="Spawning" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("5_ttf7q")
+
+[node name="ToTravelling" type="Node" parent="StateChart/CompoundState/Spawning"]
+script = ExtResource("6_rgrgh")
+to = NodePath("../../Travelling")
+
+[node name="Travelling" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("5_ttf7q")
+
+[node name="Despawn" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("5_ttf7q")
+
+[node name="Dying" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("5_ttf7q")
+
+[node name="Path2D" type="Path2D" parent="."]
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+loop = false
+
+[node name="Enemy" type="Sprite2D" parent="Path2D/PathFollow2D"]
 position = Vector2(-16, -16)
 scale = Vector2(0.28125, 0.28125)
 texture = ExtResource("2_ta238")
 centered = false
+
+[connection signal="state_entered" from="StateChart/CompoundState/Spawning" to="." method="_on_spawning_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/Travelling" to="." method="_on_travelling_state_entered"]
+[connection signal="state_processing" from="StateChart/CompoundState/Travelling" to="." method="_on_travelling_state_processing"]
