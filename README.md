@@ -10,15 +10,14 @@ Functionality that I would like to add:
 - In-game UI elements such as user HP, currency, timer, start wave/pause wave
 - You lost menu
   
-
 **Tower Related:**
-- Towers have their own stats (Attack speed, range, damage)
 - Towers automatically attack any enemy within range
+- Towers have their own stats (Attack speed, range, damage)
 - Towers can only be placed when user has enough currency
 
 **Enemy Related:**
-- Enemies have their own stats (Health, speed)
 - Wave system that gets progressively more difficult
+- Enemies have their own stats (Health, speed)
 - Enemies drop currency that user spends to buy towers
 
 **Rougelike Related:**
