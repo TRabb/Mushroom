@@ -1,8 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://v0rb7qfq62wj"]
+[gd_scene load_steps=4 format=3 uid="uid://v0rb7qfq62wj"]
 
+[ext_resource type="Script" path="res://scripts/Turret2.gd" id="1_fgmhk"]
 [ext_resource type="Texture2D" uid="uid://htxvgyc4qc8m" path="res://assets/Turret2.png" id="1_isxec"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6skdg"]
+radius = 0.01
+
 [node name="Turret2" type="Node2D"]
+script = ExtResource("1_fgmhk")
 
 [node name="TurretSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_isxec")
+
+[node name="Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_6skdg")

@@ -82,6 +82,8 @@ func _place_tower():
 	if build_valid:
 		var new_tower = load("res://scenes/" + build_type + ".tscn").instantiate()
 		new_tower.position = build_location
+		new_tower.type = build_type
+		new_tower.built = true
 		get_node("Turrets").add_child(new_tower,true)
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
 		tileMap.set_cell(0, Vector2i(mouse_position), 3, Vector2i(0,0), 0)
