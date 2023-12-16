@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyvwwrwii4n8b"]
+
+[ext_resource type="Script" path="res://scripts/godot_enemy.gd" id="1_wp2f5"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_esx4w"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_wa0nw"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_l72hq"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_106i1"]
+[ext_resource type="Texture2D" uid="uid://b4rir8hgy8wgr" path="res://icon.svg" id="6_ypt84"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gv11x"]
+size = Vector2(36, 36)
+
+[node name="EnemyBody" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_wp2f5")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("2_esx4w")
+
+[node name="CompoundState" type="Node" parent="StateChart"]
+script = ExtResource("3_wa0nw")
+initial_state = NodePath("Spawning")
+
+[node name="Spawning" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("4_l72hq")
+
+[node name="ToTravelling" type="Node" parent="StateChart/CompoundState/Spawning"]
+script = ExtResource("5_106i1")
+to = NodePath("../../Travelling")
+
+[node name="Travelling" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("4_l72hq")
+
+[node name="Despawn" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("4_l72hq")
+
+[node name="Dying" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("4_l72hq")
+
+[node name="Path2D" type="Path2D" parent="."]
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+loop = false
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Path2D/PathFollow2D"]
+
+[node name="Enemy" type="Sprite2D" parent="Path2D/PathFollow2D/CharacterBody2D"]
+scale = Vector2(0.28125, 0.28125)
+texture = ExtResource("6_ypt84")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/CharacterBody2D"]
+shape = SubResource("RectangleShape2D_gv11x")
+
+[connection signal="state_entered" from="StateChart/CompoundState/Spawning" to="." method="_on_spawning_state_entered"]
+[connection signal="state_entered" from="StateChart/CompoundState/Travelling" to="." method="_on_travelling_state_entered"]
+[connection signal="state_processing" from="StateChart/CompoundState/Travelling" to="." method="_on_travelling_state_processing"]

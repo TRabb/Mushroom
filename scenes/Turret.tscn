@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dta6cqb1jujj2"]
-
-[ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/Turret.png" id="1_3ejym"]
-
-[node name="Turret" type="Node2D"]
-
-[node name="TurretSprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_3ejym")
