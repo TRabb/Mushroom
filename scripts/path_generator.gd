@@ -5,7 +5,7 @@ class_name PathGenerator
 
 var _path: Array[Vector2i]
 
-const path_config:PathGeneratorConfig = preload("res://resources/basic_path_config.res")
+const path_config = preload("res://resources/basic_path_config.res")
 
 #helper variables
 var _rng = RandomNumberGenerator.new()
@@ -18,15 +18,15 @@ func generate_path():
 	randomize()
 	#empty the current path array
 	_path.clear()
-	
 	#path start position
 	var x = -1
-	var y = _rng.randi_range(0,17)
+	var y = _rng.randi_range(0,path_config.map_height-1)
 	
 	#reset counter
 	counter = 0
 	var choice:int = randi_range(0,2)
 	#start making path
+	print(path_config.map_length)
 	while x < path_config.map_length:
 		
 		if not _path.has(Vector2i(x,y)):

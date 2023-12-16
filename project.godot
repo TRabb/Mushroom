@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 PathGenInstance="*res://scripts/path_generator.gd"
+GameData="*res://singletons/GameDataConfig.gd"
 
 [display]
 
@@ -30,7 +31,7 @@ project/assembly_name="Mushroom"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
 
 [input]
 
