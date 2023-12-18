@@ -10,9 +10,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gv11x"]
 size = Vector2(32, 32)
 
-[node name="EnemyBody" type="CharacterBody2D"]
+[node name="Path2D" type="Path2D"]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_x5gue")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+loop = false
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="PathFollow2D"]
+
+[node name="Enemy" type="Sprite2D" parent="PathFollow2D/CharacterBody2D"]
+texture = ExtResource("6_ca3ka")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/CharacterBody2D"]
+shape = SubResource("RectangleShape2D_gv11x")
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("2_fuwes")
@@ -36,19 +47,6 @@ script = ExtResource("4_1fehm")
 
 [node name="Dying" type="Node" parent="StateChart/CompoundState"]
 script = ExtResource("4_1fehm")
-
-[node name="Path2D" type="Path2D" parent="."]
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-loop = false
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Path2D/PathFollow2D"]
-
-[node name="Enemy" type="Sprite2D" parent="Path2D/PathFollow2D/CharacterBody2D"]
-texture = ExtResource("6_ca3ka")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/CharacterBody2D"]
-shape = SubResource("RectangleShape2D_gv11x")
 
 [connection signal="state_entered" from="StateChart/CompoundState/Spawning" to="." method="_on_spawning_state_entered"]
 [connection signal="state_entered" from="StateChart/CompoundState/Travelling" to="." method="_on_travelling_state_entered"]
