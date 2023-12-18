@@ -28,8 +28,8 @@ The end of the path is the beginning of your empire. How long will you last?
 
 **Rougelike Related:**
 - After each wave the user modifies a certain stat of the enemy
-  - Could do both positive and negative modifiers
 - After completing a set of waves the user can modifies a stat of a turret
+  - Both negative and positive modifiers
   - Both enemy and tower modifiers will carry over between sets of waves
  
 **Miscellaneous:**
