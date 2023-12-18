@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4guxp2t8rcio"]
+[gd_scene load_steps=15 format=3 uid="uid://c4guxp2t8rcio"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_gmu0c"]
 [ext_resource type="Texture2D" uid="uid://cjb3j2k3b7mj5" path="res://assets/RandomLevelGenTileset.png" id="2_2dc1x"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b14gwglifwtoo" path="res://assets/grass_tile.png" id="3_1wirw"]
 [ext_resource type="Texture2D" uid="uid://bvu5rhs2knemn" path="res://assets/no_build.png" id="5_2eclw"]
 [ext_resource type="Script" path="res://scripts/UI.gd" id="6_10y7h"]
+[ext_resource type="Script" path="res://scenes/money_label.gd" id="7_cexi4"]
 [ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/Turret1.png" id="7_d6x8h"]
 [ext_resource type="Texture2D" uid="uid://htxvgyc4qc8m" path="res://assets/Turret2.png" id="8_ouqwp"]
 
@@ -539,11 +540,15 @@ mouse_filter = 1
 
 [node name="ButtonBar" type="VBoxContainer" parent="UI/HUD"]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 636.0
+offset_left = 32.0
+offset_top = 576.0
 offset_right = 310.0
-offset_bottom = 720.0
+offset_bottom = 736.0
 alignment = 1
+
+[node name="CurrentWave" type="Label" parent="UI/HUD/ButtonBar"]
+layout_mode = 2
+text = "Wave:"
 
 [node name="NewPath" type="Button" parent="UI/HUD/ButtonBar"]
 layout_mode = 2
@@ -556,9 +561,14 @@ text = "Spawn enemy"
 [node name="BuildBar" type="VBoxContainer" parent="UI/HUD"]
 layout_mode = 0
 offset_left = 1100.0
-offset_top = 636.0
-offset_right = 1140.0
-offset_bottom = 704.0
+offset_top = 608.0
+offset_right = 1157.0
+offset_bottom = 731.0
+
+[node name="Money" type="Label" parent="UI/HUD/BuildBar"]
+layout_mode = 2
+text = "Money:"
+script = ExtResource("7_cexi4")
 
 [node name="Turret2" type="TextureButton" parent="UI/HUD/BuildBar" groups=["build_buttons"]]
 layout_mode = 2

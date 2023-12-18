@@ -3,8 +3,10 @@ var _cleanX:int
 var _cleanY:int
 var enemy_progress:float = 0
 
+#enemy stats
 var speed = GameData.enemy_data["godot_enemy"]["speed"]
 var hp = GameData.enemy_data["godot_enemy"]["hp"]
+var reward = GameData.enemy_data["godot_enemy"]["reward"]
 
 func _ready():
 	self.curve = _path_route_to_curve_2D()
@@ -34,11 +36,11 @@ func on_hit(damage):
 		
 func _on_destroy():
 	self.queue_free()
+	GameData.player_data["player"]["money"] += reward
 #endregion
 	
 #region State Methods
 func _on_spawning_state_entered():
-	#TODO: Add wave spawning logic here
 	print("Spawn state")
 	$StateChart.send_event("to_travelling")
 

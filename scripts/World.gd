@@ -15,7 +15,7 @@ var enemies_in_wave = 0
 @onready var spawnEnemyButton = $UI/HUD/ButtonBar/SpawnEnemy
 @onready var generateNewMapButton = $UI/HUD/ButtonBar/NewPath
 @onready var buildBar = $UI/HUD/BuildBar
-
+@onready var moneyLabel = $UI/HUD/BuildBar/Money
 @export var godot_enemy:PackedScene
 
 var _path:Array[Vector2i] = []
@@ -35,14 +35,16 @@ func _ready():
 func _process(delta):
 	if build_mode:
 		_get_tower_preview()
+	_update_money_display() 
 		
 func _unhandled_input(event):
 	#change mb_right and mb_left to better names
 	if event.is_action_released("mb_right") and build_mode == true:
 		_cancel_build_mode()
 	if event.is_action_released("mb_left") and build_mode == true:
-		_place_tower()
-		_cancel_build_mode()		
+		if _has_enough_money() == true:
+			_place_tower()
+			_cancel_build_mode()		
 		
 #region Building Methods#
 func _get_tower_preview():
@@ -58,7 +60,7 @@ func _get_tower_preview():
 	#print(tileMap.get_cell_source_id(0, current_tile,false))
 	
 	#if the cell is not a path - change the sprite to be slightly see through
-	if _valid_build_check() == true:
+	if _valid_build_location() == true:
 		get_node("UI").update_tower_preview(tile_position, Color.hex(0xad54ff3c))
 		build_valid = true
 		build_location = tile_position
@@ -87,7 +89,10 @@ func _place_tower():
 		get_node("Turrets").add_child(new_tower,true)
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
 		tileMap.set_cell(0, Vector2i(mouse_position), 3, Vector2i(0,0), 0)
-		print("Tower Placed")	
+		print("Tower Placed")
+		GameData.player_data["player"]["money"] -= GameData.tower_data[build_type]["cost"]	
+	else:
+		_cancel_build_mode()
 
 func _cancel_build_mode():
 	build_mode = false
@@ -95,9 +100,10 @@ func _cancel_build_mode():
 	get_node("UI/TowerPreview").free()
 	print("Build Mode Canceled")
 	
-func _valid_build_check():
+func _valid_build_location():
 	var mouse_position = tileMap.local_to_map(get_global_mouse_position())
 	
+	#FIXME: If user places tower and drags at the same time the nobuild tile will sometimes be on the wrong spot
 	#basic validation that ANY tower will follow
 	#tile is not a path, tile is not already built on, tile is within the map height
 	if tileMap.get_cell_source_id(0, mouse_position,false) != 0:
@@ -155,13 +161,28 @@ func _start_next_wave():
 	_spawn_enemies(wave_data)
 	
 func _retrieve_wave_data():
+	#TODO: Build out waves
 	var wave_data:Array = [["godot_enemy", 1], ["yellow_enemy", 1]]
 	current_wave += 1
 	enemies_in_wave = wave_data.size()
 	return wave_data
 
-		
+func _update_money_display():
+	moneyLabel.money = str(GameData.player_data["player"]["money"])
 	
-
-
+func _has_enough_money():
+	var currentMoney = GameData.player_data["player"]["money"]
+	var towerCost = GameData.tower_data[build_type]["cost"]
+	
+	if currentMoney < towerCost:
+		print("Player does not have enough money")
+		_cancel_build_mode()
+		return false
+	elif currentMoney >= towerCost:
+		print("Player has enough money")
+		return true
+	elif currentMoney <= 0:
+		print("Player does not have enough money")
+		_cancel_build_mode()
+		return false
 
