@@ -31,7 +31,7 @@ func _path_route_to_curve_2D() -> Curve2D:
 #region Hit Registration Methods
 func on_hit(damage):
 	hp -= damage
-	print(hp)
+	print("godot_enemy hp: " + str(hp))
 	if hp <= 0:
 		_on_destroy()
 		

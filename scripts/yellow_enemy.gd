@@ -31,7 +31,7 @@ func current_position():
 #region Hit Registration Methods
 func on_hit(damage):
 	hp -= damage
-	print(hp)
+	print("yellow_enemy hp: " + str(hp))
 	if hp <= 0:
 		on_destroy()
 		

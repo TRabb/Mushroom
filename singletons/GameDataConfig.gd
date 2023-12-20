@@ -5,12 +5,12 @@ var tower_data = {
 		"damage": 20,
 		"rate_of_fire": 1.0,
 		"range": 300,
-		"cost":10},
+		"cost":5},
 	"Turret2":{
-		"damage": 20,
-		"rate_of_fire": 1,
+		"damage": 30,
+		"rate_of_fire": 1.0,
 		"range": 750,
-		"cost": 20}
+		"cost": 10}
 	}
 
 var enemy_data = {
@@ -26,6 +26,6 @@ var enemy_data = {
 
 var player_data = {
 	"player":{
-		"money": 10,
+		"money": 100,
 		"current_wave": 0}
 }
