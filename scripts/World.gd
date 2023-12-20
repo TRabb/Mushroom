@@ -24,7 +24,6 @@ var _path:Array[Vector2i] = []
 func _ready():         
 	_display_path()
 	_complete_grid()
-	#_start_next_wave()
 	spawnEnemyButton.pressed.connect(self._spawn_button_pressed)
 	generateNewMapButton.pressed.connect(self._map_button_pressed)
 	
@@ -77,7 +76,8 @@ func _initiate_build_mode(tower_type):
 	get_node("UI").set_tower_preview(build_type, get_global_mouse_position())
 
 func _place_tower():
-	#mouse position in (x,y)
+	#mouse position in (px coordiates)
+	#map_to_local will give x,y coordinates
 	var mouse_position = tileMap.local_to_map(get_global_mouse_position())
 	
 	#build must be valid and inside of the map
@@ -90,6 +90,7 @@ func _place_tower():
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
 		tileMap.set_cell(0, Vector2i(mouse_position), 3, Vector2i(0,0), 0)
 		print("Tower Placed")
+		print("Build location: " + str(build_location))
 		GameData.player_data["player"]["money"] -= GameData.tower_data[build_type]["cost"]	
 	else:
 		_cancel_build_mode()
@@ -119,6 +120,7 @@ func _display_path():
 	_path = PathGenInstance.get_path_route()
 	#builds out the path with the tilemap
 	for element in _path:
+		#print(tileMap.map_to_local(element))
 		tileMap.set_cells_terrain_connect(0,_path,0,0,true)
 	
 #looks through every coordinate in the grid and fills any that are not a path with grass tileset		
@@ -137,6 +139,7 @@ func _map_button_pressed():
 	PathGenInstance.generate_path()
 	print(get_tree().reload_current_scene())
 	print("Scene Reloaded")
+	GameData.player_data["player"]["money"] = 10
 
 func _spawn_button_pressed():
 	#Working code to add enemy to path
@@ -148,6 +151,7 @@ func _spawn_button_pressed():
 
 #adds an enemy to the path 			
 func _spawn_enemies(wave_data):
+	#TODO: Find solution to add each enemy to a single Path2D
 	#this will spawn enemy by scene name. each scene needs a corresponding script
 	for i in wave_data:
 		var new_enemy = load("res://scenes/enemies/"+ i[0] +".tscn").instantiate()

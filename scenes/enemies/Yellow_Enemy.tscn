@@ -17,7 +17,7 @@ script = ExtResource("1_x5gue")
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 loop = false
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="PathFollow2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="PathFollow2D" groups=["Enemy"]]
 
 [node name="Enemy" type="Sprite2D" parent="PathFollow2D/CharacterBody2D"]
 texture = ExtResource("6_ca3ka")

@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_106i1"]
 [ext_resource type="Texture2D" uid="uid://b4rir8hgy8wgr" path="res://icon.svg" id="6_ypt84"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gv11x"]
-size = Vector2(36, 36)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r48bn"]
+size = Vector2(32, 32)
 
 [node name="Path2D" type="Path2D"]
 scale = Vector2(0.5, 0.5)
@@ -17,14 +17,14 @@ script = ExtResource("1_wp2f5")
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 loop = false
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="PathFollow2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="PathFollow2D" groups=["Enemy"]]
 
 [node name="Enemy" type="Sprite2D" parent="PathFollow2D/CharacterBody2D"]
 scale = Vector2(0.28125, 0.28125)
 texture = ExtResource("6_ypt84")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/CharacterBody2D"]
-shape = SubResource("RectangleShape2D_gv11x")
+shape = SubResource("RectangleShape2D_r48bn")
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("2_esx4w")

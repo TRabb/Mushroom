@@ -25,7 +25,9 @@ func _path_route_to_curve_2D() -> Curve2D:
 		curve_2D.add_point(Vector2i(_cleanX,_cleanY))
 	return curve_2D
 #endregion
-
+func current_position():
+	#print("Enemy global position: " + str($PathFollow2D.position/2))
+	return $PathFollow2D.position/2
 #region Hit Registration Methods
 func on_hit(damage):
 	hp -= damage

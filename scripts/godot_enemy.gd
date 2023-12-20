@@ -17,6 +17,7 @@ func _path_route_to_curve_2D() -> Curve2D:
 	var curve_2D:Curve2D = Curve2D.new()
 
 	for coord in PathGenInstance.get_path_route():
+		
 		if coord.x == 0:
 			_cleanX = coord.x		
 		else:
@@ -37,6 +38,10 @@ func on_hit(damage):
 func _on_destroy():
 	self.queue_free()
 	GameData.player_data["player"]["money"] += reward
+
+func current_position():
+	#print("Enemy global position: " + str($PathFollow2D.position/2))
+	return $PathFollow2D.position/2
 #endregion
 	
 #region State Methods
