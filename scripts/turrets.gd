@@ -20,7 +20,6 @@ func _physics_process(delta):
 			var enemy_hit_id = bullet.get_enemy_id()
 			#gets the instance of the path2d from the id of the character2d collisionbox
 			if instance_from_id(enemy_hit_id) != null:
-				#FIXME: Find solution for bullets sitting on screen after collision. Happens when there are a lot of bullets in queue
 				bullet.queue_free()
 				var enemy_hit = instance_from_id(enemy_hit_id).get_parent().get_parent()
 			#path2d is required to use the functions within the enemy scripts
@@ -40,7 +39,12 @@ func _on_range_body_entered(body):
 		enemy_array.append(body.get_parent())
 
 func _on_range_body_exited(body):
-	enemy_array.erase(body.get_parent())
+	
+	if not body.is_in_group("Bullet"):
+		enemy_array.erase(body.get_parent())
+	else:
+		#if the bullet leaves the turret range remove it
+		body.queue_free()
 #endregion
 
 #region Turret Shooting Methods

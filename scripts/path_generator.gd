@@ -26,7 +26,6 @@ func generate_path():
 	counter = 0
 	var choice:int = randi_range(0,2)
 	#start making path
-	print(path_config.map_length)
 	while x < path_config.map_length:
 		
 		if not _path.has(Vector2i(x,y)):
