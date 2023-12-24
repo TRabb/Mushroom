@@ -8,8 +8,8 @@ Idea: You are a peasant with the dream of running your own village. You start wi
 The end of the path is the beginning of your empire. How long will you last?
 
 **Menu Related:**
-- Main menu, pause menu, you lost menu that takes user back to main menu
-- In-game UI elements such as user HP, ~~currency~~, timer, start wave/pause wave
+- ~~Main menu~~, pause menu, ~~you lost menu that takes user back to main menu~~
+- In-game UI elements such as ~~user HP~~, ~~currency~~, timer, start wave/pause wave
   
 **Tower Related:**
 - ~~Towers automatically attack any enemy within range~~
