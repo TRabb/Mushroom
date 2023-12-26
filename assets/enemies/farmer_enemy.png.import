@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvu5rhs2knemn"
-path="res://.godot/imported/no_build.png-1f6e03725d74ed95ab24c590286bb267.ctex"
+uid="uid://br53ktk4l7kf6"
+path="res://.godot/imported/farmer_enemy.png-0eed3ced8d51f88845bf01e36559e462.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/no_build.png"
-dest_files=["res://.godot/imported/no_build.png-1f6e03725d74ed95ab24c590286bb267.ctex"]
+source_file="res://assets/enemies/farmer_enemy.png"
+dest_files=["res://.godot/imported/farmer_enemy.png-0eed3ced8d51f88845bf01e36559e462.ctex"]
 
 [params]
 

@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://huoi6g31bgna"]
+
+[ext_resource type="Script" path="res://scripts/YouLosePopup.gd" id="1_7v8v8"]
+
+[node name="YouLosePopup" type="VBoxContainer"]
+process_mode = 2
+offset_left = 576.0
+offset_top = 320.0
+offset_right = 703.0
+offset_bottom = 378.0
+script = ExtResource("1_7v8v8")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "YOU LOSE!"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TryAgain" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Try Again"
+
+[node name="Quit" type="Button" parent="Buttons"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="Buttons/TryAgain" to="." method="_on_try_again_pressed"]
+[connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]

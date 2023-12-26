@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj5obg17eix8q"
-path="res://.godot/imported/Turret1.png-5184005dd9e74141dc4727c5823f9c39.ctex"
+uid="uid://dqi7vq07x65f0"
+path="res://.godot/imported/range_overlay.png-8111bdb87e6dfd491c6696c62b5f59da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Turret1.png"
-dest_files=["res://.godot/imported/Turret1.png-5184005dd9e74141dc4727c5823f9c39.ctex"]
+source_file="res://assets/defenses/range_overlay.png"
+dest_files=["res://.godot/imported/range_overlay.png-8111bdb87e6dfd491c6696c62b5f59da.ctex"]
 
 [params]
 

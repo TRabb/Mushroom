@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mushroom"
-run/main_scene="res://scenes/World.tscn"
+run/main_scene="res://scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,8 +22,8 @@ GameData="*res://singletons/GameDataConfig.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=1440
+window/size/viewport_height=928
 
 [dotnet]
 
@@ -32,6 +32,10 @@ project/assembly_name="Mushroom"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
+
+[gui]
+
+theme/custom_font="res://assets/ui/kenvector_future_thin2.ttf"
 
 [input]
 
