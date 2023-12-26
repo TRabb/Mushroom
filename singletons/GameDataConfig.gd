@@ -20,7 +20,7 @@ var tower_data = {
 
 var enemy_data = {
 	"farmer_enemy":{
-		"speed": 1000,
+		"speed": 250,
 		"hp": 50,
 		"reward": 1,
 		"damage": 1},

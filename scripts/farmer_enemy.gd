@@ -2,7 +2,8 @@ extends Path2D
 var _cleanX:int
 var _cleanY:int
 var enemy_progress:float = 0
-
+@onready var _moving_animation = $PathFollow2D/CharacterBody2D/Enemy
+@onready var _health_bar = $PathFollow2D/CharacterBody2D/HealthBar
 #enemy stats
 var speed = GameData.enemy_data["farmer_enemy"]["speed"]
 var hp = GameData.enemy_data["farmer_enemy"]["hp"]
@@ -12,6 +13,7 @@ var damage = GameData.enemy_data["farmer_enemy"]["damage"]
 func _ready():
 	self.curve = _path_route_to_curve_2D()
 	$PathFollow2D.progress = 0
+	_health_bar.max_value = hp
 	
 #region Pathing Methods
 func _path_route_to_curve_2D() -> Curve2D:
@@ -31,6 +33,7 @@ func _path_route_to_curve_2D() -> Curve2D:
 #region Hit Registration Methods
 func on_hit(damage):
 	hp -= damage
+	_health_bar.value = hp
 	print("godot_enemy hp: " + str(hp))
 	if hp <= 0:
 		_on_destroy()
@@ -55,6 +58,7 @@ func _on_spawning_state_entered():
 
 func _on_travelling_state_entered():
 	print("Travelling state")
+	_moving_animation.play("moving")
 
 func _on_travelling_state_processing(delta):
 	enemy_progress += (delta * speed)

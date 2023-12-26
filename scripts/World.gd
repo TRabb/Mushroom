@@ -144,7 +144,7 @@ func _display_path():
 	#builds out the path with the tilemap
 	for element in _path:
 		#print(tileMap.map_to_local(element))
-		tileMap.set_cells_terrain_connect(0,_path,0,0,true)
+		tileMap.set_cells_terrain_connect(0,_path,0,3,true)
 	
 #looks through every coordinate in the grid and fills any that are not a path with grass tileset		
 func _complete_grid():
@@ -213,6 +213,7 @@ func reload_game():
 	GameData.reset()
 
 func _player_dead():
+	#FIXME: Game over doesnt reg if yellow enemy brings player to 0 hp
 	if GameData.player_data["player"]["health"] == 0:
 		get_tree().paused = true
 		var youLost = load("res://scenes/YouLosePopup.tscn")

@@ -33,6 +33,10 @@ project/assembly_name="Mushroom"
 
 enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
 
+[gui]
+
+theme/custom_font="res://assets/ui/kenvector_future_thin2.ttf"
+
 [input]
 
 mb_right={

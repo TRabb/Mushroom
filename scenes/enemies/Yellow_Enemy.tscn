@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_csgdm"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_1fehm"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_t8jws"]
-[ext_resource type="Texture2D" uid="uid://bq4v1m7irguit" path="res://assets/yellow_enemy.png" id="6_ca3ka"]
+[ext_resource type="Texture2D" uid="uid://bq4v1m7irguit" path="res://assets/enemies/yellow_enemy.png" id="6_ca3ka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gv11x"]
 size = Vector2(32, 32)
