@@ -39,12 +39,14 @@ func _on_range_body_entered(body):
 		enemy_array.append(body.get_parent())
 
 func _on_range_body_exited(body):
-	
+	#check required so nodes that are enemies are not removed from the enemy array when they leave a turrets range
 	if not body.is_in_group("Bullet"):
 		enemy_array.erase(body.get_parent())
 	else:
+		#check to make sure the range the bullet left is from the turret it was shot from
+		if self.get_node("Range").has_node("CharacterBody2D"):
 		#if the bullet leaves the turret range remove it
-		body.queue_free()
+			body.queue_free()
 #endregion
 
 #region Turret Shooting Methods
@@ -60,10 +62,21 @@ func _select_enemy():
 func _create_bullet():
 	#creates the bullet scene and targets at the enemy
 	bullet = load("res://scenes/bullet.tscn").instantiate()
-	self.get_parent().add_child(bullet)
-	bullet.position = Vector2(self.position.x, self.position.y)
+	get_node("Range").add_child(bullet)
+	#self.add_child(bullet)
+	bullet.position = Vector2(0,0)
+	var turretGlobalPosition = Vector2(self.position.x, self.position.y)
 	var enemyPosition = enemy.current_position()
-	bullet.set_velocity(enemyPosition - bullet.position)
+	print(self.name)
+	bullet.set_parent_turret(self.name)
+	
+	print("enemyposition: " + str(enemyPosition))
+	print("turret position: " + str(turretGlobalPosition))
+	print("bullet destination: " + str(enemyPosition - turretGlobalPosition))
+	#this gets the location of the enemy relative to the turret
+	var bulletDestination = enemyPosition - turretGlobalPosition
+	
+	bullet.set_velocity(bulletDestination - bullet.position)
 	
 func _fire():
 	readytofire = false

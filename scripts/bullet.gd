@@ -4,6 +4,8 @@ var speed = 600
 var enemyLocation
 var enemy_hit_id
 var hit
+var parentTurret
+var turretType
 
 func _physics_process(delta):
 	#situation happens when shooting at enemy but hit a different deals damange to targeted enemy not hit enemy
@@ -23,3 +25,10 @@ func enemy_hit():
 func get_enemy_id():
 	#this is used to check which enemy needs to take damage
 	return enemy_hit_id
+
+func set_parent_turret(turret):
+	turretType = turret
+	
+func get_parent_turret():
+	return turretType
+	

@@ -77,7 +77,7 @@ custom_solver_bias = 1.0
 size = Vector2(96, 96)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5u2tc"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+bg_color = Color(1, 1, 1, 1)
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
@@ -115,9 +115,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -48.0
-offset_top = -64.0
+offset_top = -60.0
 offset_right = 48.0
-offset_bottom = -56.0
+offset_bottom = -52.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_4j4sf")

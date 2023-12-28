@@ -15,8 +15,7 @@ var enemies_in_wave = 0
 @onready var spawnEnemyButton = $UI/HUD/ButtonBar/SpawnEnemy
 @onready var generateNewMapButton = $UI/HUD/ButtonBar/NewPath
 @onready var buildBar = $UI/HUD/BuildBar
-@onready var moneyLabel = $UI/HUD/PlayerInfo/Money
-@onready var healthLabel = $UI/HUD/PlayerInfo/Health
+
 
 var _path:Array[Vector2i] = []
 
@@ -33,10 +32,11 @@ func _ready():
 		i.pressed.connect(self._initiate_build_mode.bind(i.get_name()))
 	
 func _process(delta):
-	_update_health_display()
+	get_node("UI").update_health_display()
 	if build_mode:
 		_get_tower_preview()
-	_update_money_display()
+	get_node("UI").update_money_display()
+	_player_level_up()
 
 		
 func _unhandled_input(event):
@@ -92,8 +92,8 @@ func _place_tower():
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
 		tileMap.set_cell(0, Vector2i(tileMap.local_to_map(build_location)), 3, Vector2i(0,0), 0)
 		print("Tower Placed")
-		print("Build location: " + str(tileMap.local_to_map(build_location)))
-		print("NoBuild tile location: " + str(mouse_position))
+		#print("Build location: " + str(tileMap.local_to_map(build_location)))
+		#print("NoBuild tile location: " + str(mouse_position))
 		GameData.player_data["player"]["money"] -= GameData.tower_data[build_type]["cost"]
 		_cancel_build_mode()	
 	else:
@@ -110,9 +110,11 @@ func _valid_build_location():
 	var mouse_position = tileMap.local_to_map(get_global_mouse_position())
 	
 	#basic validation that any tower will follow
-	#tile is not a path, tile is not already built on, tile is within the map height
-	if tileMap.get_cell_source_id(0, mouse_position,false) != 1:
+	#tile is not a path
+	if tileMap.get_cell_source_id(0, mouse_position,false) != 0:
+		#tile is not already built on
 		if tileMap.get_cell_source_id(0, mouse_position,false) != 3:
+			#tile is within the map
 			if mouse_position.y < PathGenInstance.path_config.map_height:
 				return true
 	else:
@@ -144,7 +146,7 @@ func _display_path():
 	#builds out the path with the tilemap
 	for element in _path:
 		#print(tileMap.map_to_local(element))
-		tileMap.set_cells_terrain_connect(0,_path,0,3,true)
+		tileMap.set_cells_terrain_connect(0,_path,0,0,true)
 	
 #looks through every coordinate in the grid and fills any that are not a path with grass tileset		
 func _complete_grid():
@@ -189,20 +191,13 @@ func _retrieve_wave_data():
 	#TODO: Build out waves - 
 	#TODO: Pause/Unpause waves - user should still be able to build during this
 	#first value is the enemy to spawn, second value is the delay before spawning next enemy in array
-	var wave_data:Array = [["farmer_enemy", 1], ["yellow_enemy", 1]]
+	var wave_data:Array = [["farmer_enemy", 1], ["farmer_enemy", 1]]
 	current_wave += 1
 	enemies_in_wave = wave_data.size()
 	return wave_data
 #endregion
 
-#region Label Update Methods#
-func _update_money_display():
-	moneyLabel.money = str(GameData.player_data["player"]["money"])
-	
-func _update_health_display():
-	healthLabel.health = str(GameData.player_data["player"]["health"])
-	_player_dead()
-#endregion
+
 
 #region Utility Methods
 func reload_game():
@@ -212,12 +207,23 @@ func reload_game():
 	#reset() just resets the player dictionary to default values
 	GameData.reset()
 
-func _player_dead():
-	#FIXME: Game over doesnt reg if yellow enemy brings player to 0 hp
-	if GameData.player_data["player"]["health"] == 0:
+func is_player_dead():
+	if GameData.player_data["player"]["health"] <= 0:
 		get_tree().paused = true
 		var youLost = load("res://scenes/YouLosePopup.tscn")
 		get_node("UI").add_child(youLost.instantiate())
+		
+func _player_level_up():
+	if GameData.player_data["player"]["xp"] >= GameData.player_data["player"]["xp_to_level"]:
+		GameData.player_data["player"]["current_level"] += 1
+		GameData.player_data["player"]["xp"] = GameData.player_data["player"]["xp"] - GameData.player_data["player"]["xp_to_level"]
+		#use snapped method for rounding decimals
+		GameData.player_data["player"]["xp_to_level"] = snapped(GameData.player_data["player"]["xp_to_level"] * 1.3, 1)
+		get_node("UI").update_xp_bar()
+		get_node("UI").update_playerLevel_display()
+	else:
+		get_node("UI").update_xp_bar()
+		get_node("UI").update_playerLevel_display()
 #endregion
 
 
