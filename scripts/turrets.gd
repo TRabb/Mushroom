@@ -61,7 +61,7 @@ func _select_enemy():
 	
 func _create_bullet():
 	#creates the bullet scene and targets at the enemy
-	bullet = load("res://scenes/bullet.tscn").instantiate()
+	bullet = load("res://scenes/defenses/bullet.tscn").instantiate()
 	get_node("Range").add_child(bullet)
 	#self.add_child(bullet)
 	bullet.position = Vector2(0,0)

@@ -84,7 +84,7 @@ func _place_tower():
 	
 	#build must be valid and inside of the map
 	if build_valid:
-		var new_tower = load("res://scenes/" + build_type + ".tscn").instantiate()
+		var new_tower = load("res://scenes/defenses/" + build_type + ".tscn").instantiate()
 		new_tower.position = build_location
 		new_tower.type = build_type
 		new_tower.built = true
@@ -188,7 +188,7 @@ func _start_next_wave():
 	_spawn_enemies(wave_data)
 	
 func _retrieve_wave_data():
-	#TODO: Build out waves - 
+	#TODO: Build out waves
 	#TODO: Pause/Unpause waves - user should still be able to build during this
 	#first value is the enemy to spawn, second value is the delay before spawning next enemy in array
 	var wave_data:Array = [["farmer_enemy", 1], ["farmer_enemy", 1]]
@@ -210,7 +210,7 @@ func reload_game():
 func is_player_dead():
 	if GameData.player_data["player"]["health"] <= 0:
 		get_tree().paused = true
-		var youLost = load("res://scenes/YouLosePopup.tscn")
+		var youLost = load("res://scenes/menus/YouLosePopup.tscn")
 		get_node("UI").add_child(youLost.instantiate())
 		
 func _player_level_up():
@@ -221,9 +221,18 @@ func _player_level_up():
 		GameData.player_data["player"]["xp_to_level"] = snapped(GameData.player_data["player"]["xp_to_level"] * 1.3, 1)
 		get_node("UI").update_xp_bar()
 		get_node("UI").update_playerLevel_display()
+		
+		_get_levelUp_screen()
+		
 	else:
 		get_node("UI").update_xp_bar()
 		get_node("UI").update_playerLevel_display()
+		
+func _get_levelUp_screen():
+	#TODO: Level up logic
+	get_tree().paused = true
+	var levelUp = load("res://scenes/menus/LevelUpPopup.tscn")
+	get_node("UI").add_child(levelUp.instantiate())		
 #endregion
 
 

@@ -10,7 +10,7 @@ extends CanvasLayer
 func set_tower_preview(tower_type, mouse_position):
 	
 	#get the preview of the sprite based on the tower type selected
-	var drag_tower = load("res://scenes/" + tower_type + ".tscn").instantiate()
+	var drag_tower = load("res://scenes/defenses/" + tower_type + ".tscn").instantiate()
 	drag_tower.set_name("DragTower")
 	
 	var range_texture = Sprite2D.new()

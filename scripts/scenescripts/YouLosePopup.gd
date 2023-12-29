@@ -20,4 +20,4 @@ func _on_try_again_pressed():
 func _on_quit_pressed():
 	get_tree().paused = false
 	
-	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/MainMenu.tscn")

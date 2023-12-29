@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://ogl1phqkvq6t"]
+
+[ext_resource type="Script" path="res://scripts/scenescripts/LevelUpPopup.gd" id="1_kuojf"]
+[ext_resource type="Texture2D" uid="uid://b5qrsqic15hh7" path="res://assets/ui/UIBackground.png" id="1_s87k0"]
+[ext_resource type="Texture2D" uid="uid://cwx40ltxw2sd7" path="res://assets/ui/LevelUpBackground.png" id="2_nydpc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi8r3"]
+texture = ExtResource("1_s87k0")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r4am2"]
+texture = ExtResource("2_nydpc")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_giwax"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_pi8r3")
+sources/1 = SubResource("TileSetAtlasSource_r4am2")
+
+[node name="LevelUpMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 256.0
+offset_right = 1088.0
+offset_bottom = 384.0
+mouse_filter = 1
+script = ExtResource("1_kuojf")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 193.0
+offset_right = 664.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 40
+text = "Choose one modifier"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(-255, -64)
+tile_set = SubResource("TileSet_giwax")
+rendering_quadrant_size = 64
+format = 2
+layer_0/tile_data = PackedInt32Array(196613, 65537, 2, 196614, 131073, 2, 131078, 65537, 0, 131077, 1, 0, 196617, 65537, 2, 131082, 65537, 0, 131081, 1, 0, 196618, 131073, 2, 131083, 131073, 0, 196619, 1, 1, 131079, 131073, 0, 196615, 1, 1, 262153, 65537, 2, 262154, 131073, 2, 262155, 1, 1, 262151, 1, 1, 262150, 131073, 2, 262149, 65537, 2, 327685, 1, 2, 327686, 131073, 1, 327687, 65537, 1, 327689, 1, 2, 327690, 131073, 1, 327691, 65537, 1, 327695, 65537, 1, 131087, 131073, 0, 131086, 65537, 0, 131085, 1, 0, 196623, 1, 1, 262159, 1, 1, 327694, 131073, 1, 327693, 1, 2, 262158, 131073, 2, 196622, 131073, 2, 262157, 65537, 2, 196621, 65537, 2)
+
+[node name="Close" type="Button" parent="."]
+process_mode = 2
+layout_mode = 0
+offset_left = 384.0
+offset_top = 336.0
+offset_right = 449.0
+offset_bottom = 362.0
+text = "Close"
+
+[connection signal="pressed" from="Close" to="." method="_on_button_pressed"]

@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://dta6cqb1jujj2"]
 
-[ext_resource type="Script" path="res://scripts/Turret1.gd" id="1_f04ml"]
-[ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/defenses/Turret1.png" id="1_oqyin"]
+[ext_resource type="Script" path="res://scripts/scenescripts/Turret1.gd" id="1_h00dq"]
+[ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/defenses/Turret1.png" id="2_ibj1o"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_01le5"]
 radius = 0.01
 
 [node name="Turret1" type="Node2D"]
-script = ExtResource("1_f04ml")
+script = ExtResource("1_h00dq")
 
 [node name="TurretSprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_oqyin")
+texture = ExtResource("2_ibj1o")
 
 [node name="Range" type="Area2D" parent="."]
 
