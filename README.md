@@ -4,11 +4,12 @@ This is my first attempt at game development using GDScript. The goal is to crea
 Functionality that I would like to add:
 
 **Decide on some sort of theme and art style**
-Idea: You are a peasant with the dream of running your own village. You start with everything you own, which isn't much, and you must defend your castle from medieval creatures trying to ruin your destiny.
+Idea: You are a peasant with the dream of running your own village. You start with everything you own, which isn't much, and you must defend your land from medieval creatures trying to ruin your destiny.
 The end of the path is the beginning of your empire. How long will you last?
 
 **Menu Related:**
-- ~~Main menu~~, pause menu, ~~you lost menu that takes user back to main menu~~
+- Create backgrounds for all menus
+- Pause menu
 - In-game UI elements such as ~~user HP~~, ~~currency~~, timer, start wave/pause wave
   
 **Tower Related:**
@@ -36,5 +37,8 @@ The end of the path is the beginning of your empire. How long will you last?
 - Better map generation, some ideas include
   - Loops
   - Multiple paths intersecting
-
+  - River that goes top down that can also spawn enemies
+  - Different types of terrain that can spawn to block tower placement. These can also be used as areas only certain towers can be placed
+  - **BALANCE BALANCE BALANCE!**
+  
 No real end goal for this other then to learn!
