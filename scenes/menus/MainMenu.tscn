@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://cy3bpsb7s118o"]
 
-[ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_rekj2"]
+[ext_resource type="Script" path="res://scripts/scenescripts/MainMenu.gd" id="1_mvid8"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_rekj2")
+script = ExtResource("1_mvid8")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2

@@ -42,7 +42,10 @@ func on_destroy():
 
 func _on_survived():
 	self.queue_free()
-	GameData.player_data["player"]["health"] -= damage
+	if GameData.player_data["player"]["health"] - damage < 0:
+		GameData.player_data["player"]["health"] = 0
+	else:
+		GameData.player_data["player"]["health"] -= damage
 #endregion	
 
 #region State Methods

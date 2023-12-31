@@ -9,6 +9,7 @@ var speed = GameData.enemy_data["farmer_enemy"]["speed"]
 var hp = GameData.enemy_data["farmer_enemy"]["hp"]
 var reward = GameData.enemy_data["farmer_enemy"]["reward"]
 var damage = GameData.enemy_data["farmer_enemy"]["damage"]
+var xp = GameData.enemy_data["farmer_enemy"]["xp"]
 
 func _ready():
 	self.curve = _path_route_to_curve_2D()
@@ -41,10 +42,14 @@ func on_hit(damage):
 func _on_destroy():
 	self.queue_free()
 	GameData.player_data["player"]["money"] += reward
+	GameData.player_data["player"]["xp"] += xp
 	
 func _on_survived():
 	self.queue_free()
-	GameData.player_data["player"]["health"] -= damage
+	if GameData.player_data["player"]["health"] - damage < 0:
+		GameData.player_data["player"]["health"] = 0
+	else:
+		GameData.player_data["player"]["health"] -= damage
 
 func current_position():
 	#print("Enemy global position: " + str($PathFollow2D.position/2))

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mushroom"
-run/main_scene="res://scenes/MainMenu.tscn"
+run/main_scene="res://scenes/menus/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,8 +22,9 @@ GameData="*res://singletons/GameDataConfig.gd"
 
 [display]
 
-window/size/viewport_width=1440
-window/size/viewport_height=928
+window/size/viewport_width=1408
+window/size/viewport_height=960
+window/stretch/mode="viewport"
 
 [dotnet]
 
