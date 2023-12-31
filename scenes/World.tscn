@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c4guxp2t8rcio"]
+[gd_scene load_steps=21 format=3 uid="uid://c4guxp2t8rcio"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/World.gd" id="1_gmu0c"]
 [ext_resource type="Texture2D" uid="uid://dgpprudxq3e5o" path="res://assets/map/path.png" id="2_j6w7t"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/labels/money_label.gd" id="7_cexi4"]
 [ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/defenses/Turret1.png" id="7_d6x8h"]
 [ext_resource type="Texture2D" uid="uid://htxvgyc4qc8m" path="res://assets/defenses/Turret2.png" id="8_ouqwp"]
+[ext_resource type="Script" path="res://scripts/labels/currentwave_label.gd" id="9_lpe64"]
 [ext_resource type="Script" path="res://scripts/labels/health_label.gd" id="9_rkryu"]
 [ext_resource type="Script" path="res://scripts/labels/playerlevel_label.gd" id="9_xk0jh"]
 [ext_resource type="Script" path="res://scripts/labels/xp_progressbar.gd" id="12_sftc7"]
@@ -247,6 +248,7 @@ layout_mode = 2
 theme_override_constants/shadow_outline_size = 36
 theme_override_font_sizes/font_size = 30
 text = "Wave:"
+script = ExtResource("9_lpe64")
 
 [node name="PlayerLevel" type="Label" parent="UI/HUD/PlayerInfo"]
 layout_mode = 2

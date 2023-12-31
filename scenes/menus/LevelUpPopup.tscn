@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ogl1phqkvq6t"]
+[gd_scene load_steps=8 format=3 uid="uid://ogl1phqkvq6t"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/LevelUpPopup.gd" id="1_kuojf"]
 [ext_resource type="Texture2D" uid="uid://b5qrsqic15hh7" path="res://assets/ui/UIBackground.png" id="1_s87k0"]
 [ext_resource type="Texture2D" uid="uid://cwx40ltxw2sd7" path="res://assets/ui/LevelUpBackground.png" id="2_nydpc"]
+[ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/defenses/Turret1.png" id="4_ljrrh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi8r3"]
 texture = ExtResource("1_s87k0")
@@ -48,6 +49,7 @@ mouse_filter = 1
 script = ExtResource("1_kuojf")
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 offset_left = 193.0
 offset_right = 664.0
 offset_bottom = 64.0
@@ -71,5 +73,89 @@ offset_top = 336.0
 offset_right = 449.0
 offset_bottom = 362.0
 text = "Close"
+
+[node name="FirstChoice" type="VBoxContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(170, 239)
+layout_mode = 2
+offset_left = 76.0
+offset_top = 73.0
+offset_right = 246.0
+offset_bottom = 312.0
+theme_override_constants/separation = 40
+
+[node name="Name" type="Label" parent="FirstChoice"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+text = "Upgrade text placeholder - make 3 lines"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Picture" type="TextureRect" parent="FirstChoice"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+texture = ExtResource("4_ljrrh")
+stretch_mode = 5
+
+[node name="SelectButton" type="Button" parent="FirstChoice"]
+layout_mode = 2
+text = "Select"
+
+[node name="SecondChoice" type="VBoxContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(170, 239)
+layout_mode = 0
+offset_left = 332.0
+offset_top = 73.0
+offset_right = 502.0
+offset_bottom = 312.0
+theme_override_constants/separation = 40
+
+[node name="Name" type="Label" parent="SecondChoice"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+text = "Upgrade text placeholder - make 3 lines"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Picture" type="TextureRect" parent="SecondChoice"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+texture = ExtResource("4_ljrrh")
+stretch_mode = 5
+
+[node name="SelectButton" type="Button" parent="SecondChoice"]
+layout_mode = 2
+text = "Select"
+
+[node name="ThirdChoice" type="VBoxContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(170, 239)
+layout_mode = 0
+offset_left = 588.0
+offset_top = 73.0
+offset_right = 758.0
+offset_bottom = 312.0
+theme_override_constants/separation = 40
+
+[node name="Name" type="Label" parent="ThirdChoice"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+text = "Upgrade text placeholder - make 3 lines"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Picture" type="TextureRect" parent="ThirdChoice"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+texture = ExtResource("4_ljrrh")
+stretch_mode = 5
+
+[node name="SelectButton" type="Button" parent="ThirdChoice"]
+layout_mode = 2
+text = "Select"
 
 [connection signal="pressed" from="Close" to="." method="_on_button_pressed"]

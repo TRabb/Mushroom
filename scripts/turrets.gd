@@ -67,12 +67,12 @@ func _create_bullet():
 	bullet.position = Vector2(0,0)
 	var turretGlobalPosition = Vector2(self.position.x, self.position.y)
 	var enemyPosition = enemy.current_position()
-	print(self.name)
+	#print(self.name)
 	bullet.set_parent_turret(self.name)
 	
-	print("enemyposition: " + str(enemyPosition))
-	print("turret position: " + str(turretGlobalPosition))
-	print("bullet destination: " + str(enemyPosition - turretGlobalPosition))
+	#print("enemyposition: " + str(enemyPosition))
+	#print("turret position: " + str(turretGlobalPosition))
+	#print("bullet destination: " + str(enemyPosition - turretGlobalPosition))
 	#this gets the location of the enemy relative to the turret
 	var bulletDestination = enemyPosition - turretGlobalPosition
 	

@@ -1,23 +1,22 @@
 extends Node2D
-
-var map_node
+#variables for nodes
+@onready var _ui_node = get_node("UI")
 #variables for turrets
 var build_mode = false
 var build_valid = false
 var build_location
 var build_type
 var tower_type
-var current_wave = 0
+#variables for waves
 var enemies_in_wave = 0
-#Tilemap that will contain my path
+#variables for path generation
+var _path:Array[Vector2i] = []
+#onready variables
 @onready var tileMap = $Path
-#Path2D that is used to create a path for emeies to follow
 @onready var spawnEnemyButton = $UI/HUD/ButtonBar/SpawnEnemy
 @onready var generateNewMapButton = $UI/HUD/ButtonBar/NewPath
 @onready var buildBar = $UI/HUD/BuildBar
 
-
-var _path:Array[Vector2i] = []
 
 func _ready():
 	#gets a fresh scene every time it is switched too
@@ -32,11 +31,12 @@ func _ready():
 		i.pressed.connect(self._initiate_build_mode.bind(i.get_name()))
 	
 func _process(delta):
-	get_node("UI").update_health_display()
+	_ui_node.update_health_display()
 	if build_mode:
 		_get_tower_preview()
-	get_node("UI").update_money_display()
+	_ui_node.update_money_display()
 	_player_level_up()
+	_ui_node.update_wave_display()
 
 		
 func _unhandled_input(event):
@@ -62,12 +62,12 @@ func _get_tower_preview():
 	
 	#if the cell is not a path - change the sprite to be slightly see through
 	if _valid_build_location() == true:
-		get_node("UI").update_tower_preview(tile_position, Color.hex(0xad54ff3c))
+		_ui_node.update_tower_preview(tile_position, Color.hex(0xad54ff3c))
 		build_valid = true
 		build_location = tile_position
 	#if the cell is a path - grey out the sprite
 	else:
-		get_node("UI").update_tower_preview(tile_position, Color.hex(0x3d3d3d))
+		_ui_node.update_tower_preview(tile_position, Color.hex(0x3d3d3d))
 		build_valid = false
 		
 func _initiate_build_mode(tower_type):
@@ -75,7 +75,7 @@ func _initiate_build_mode(tower_type):
 		_cancel_build_mode()
 	build_type = tower_type
 	build_mode = true
-	get_node("UI").set_tower_preview(build_type, get_global_mouse_position())
+	_ui_node.set_tower_preview(build_type, get_global_mouse_position())
 
 func _place_tower():
 	#mouse position in (px coordiates)
@@ -173,28 +173,57 @@ func _spawn_button_pressed():
 
 #region Enemy/Wave Methods#
 #adds an enemy to the path 			
-func _spawn_enemies(wave_data):
+func _spawn_enemies(_wave_data):
 	#FIXME: MAYBE - Find solution to add each enemy to a single Path2D
 	#this will spawn enemy by scene name. each scene needs a corresponding script
-	for i in wave_data:
+	for i in _wave_data:
 		var new_enemy = load("res://scenes/enemies/"+ i[0] +".tscn").instantiate()
 		add_child(new_enemy)
 		await(get_tree().create_timer(i[1]).timeout)
 		print(i[0] + " Spawned")
 	
 func _start_next_wave():
-	var wave_data = _retrieve_wave_data()
+	var _wave_data = _retrieve_wave_data()
 	await(get_tree().create_timer(0.2).timeout)
-	_spawn_enemies(wave_data)
+	_spawn_enemies(_wave_data)
 	
 func _retrieve_wave_data():
-	#TODO: Build out waves
 	#TODO: Pause/Unpause waves - user should still be able to build during this
-	#first value is the enemy to spawn, second value is the delay before spawning next enemy in array
-	var wave_data:Array = [["farmer_enemy", 1], ["farmer_enemy", 1]]
-	current_wave += 1
-	enemies_in_wave = wave_data.size()
-	return wave_data
+	var _wave_size = 0
+	var _spawnable_enemies:Array = []
+	var _wave_data:Array
+	var _rng = RandomNumberGenerator.new()	
+	
+	GameData.player_data["player"]["current_wave"] += 1
+	var current_wave = GameData.player_data["player"]["current_wave"]
+	#print("GameData wave: " + str(GameData.player_data["player"]["current_wave"]))
+	#randomly pick the size of the wave
+	#FIXME: Find a better solution to random wave size, feels to inconsistent
+	_wave_size = _rng.randi_range(1, current_wave+1)
+
+	#clear all arrays used for wave generation
+	_spawnable_enemies.clear()
+	_wave_data.clear()
+	
+	#creates an array with all the enemies that can spawn
+	var _enemy_list = GameData.enemy_data.keys()
+	for enemy in _enemy_list:
+		var enemy_values = GameData.enemy_data.get(enemy)
+		if int(enemy_values["spawn_wave"]) <= current_wave:
+			_spawnable_enemies.append(enemy)
+		else:
+			print("Enemy can not spawn yet")
+			
+	#randomly picks enemies and creates a wave		
+	for enemy in _wave_size:
+		var _random_selection = _spawnable_enemies[randi() % _spawnable_enemies.size()]
+		#first value is the enemy to spawn, second value is the delay before spawning next enemy in array
+		var _clean_array:Array = [_random_selection, 1]
+		_wave_data.append(_clean_array)
+		
+		
+	enemies_in_wave = _wave_data.size()
+	return _wave_data
 #endregion
 
 
@@ -211,7 +240,7 @@ func is_player_dead():
 	if GameData.player_data["player"]["health"] <= 0:
 		get_tree().paused = true
 		var youLost = load("res://scenes/menus/YouLosePopup.tscn")
-		get_node("UI").add_child(youLost.instantiate())
+		_ui_node.add_child(youLost.instantiate())
 		
 func _player_level_up():
 	if GameData.player_data["player"]["xp"] >= GameData.player_data["player"]["xp_to_level"]:
@@ -219,20 +248,20 @@ func _player_level_up():
 		GameData.player_data["player"]["xp"] = GameData.player_data["player"]["xp"] - GameData.player_data["player"]["xp_to_level"]
 		#use snapped method for rounding decimals
 		GameData.player_data["player"]["xp_to_level"] = snapped(GameData.player_data["player"]["xp_to_level"] * 1.3, 1)
-		get_node("UI").update_xp_bar()
-		get_node("UI").update_playerLevel_display()
+		_ui_node.update_xp_bar()
+		_ui_node.update_playerLevel_display()
 		
 		_get_levelUp_screen()
 		
 	else:
-		get_node("UI").update_xp_bar()
-		get_node("UI").update_playerLevel_display()
+		_ui_node.update_xp_bar()
+		_ui_node.update_playerLevel_display()
 		
 func _get_levelUp_screen():
-	#TODO: Level up logic
+	#TODO: Have level up options actually do something
 	get_tree().paused = true
 	var levelUp = load("res://scenes/menus/LevelUpPopup.tscn")
-	get_node("UI").add_child(levelUp.instantiate())		
+	_ui_node.add_child(levelUp.instantiate())		
 #endregion
 
 

@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var moneyLabel = $HUD/PlayerInfo/Money
 @onready var healthLabel = $HUD/PlayerInfo/Health
 @onready var playerLevelLabel = $HUD/PlayerInfo/PlayerLevel
+@onready var waveLabel = $HUD/PlayerInfo/CurrentWave
 @onready var xpBar = $HUD/XPBar
 
 #region Tower Preview Methods
@@ -55,4 +56,7 @@ func update_playerLevel_display():
 func update_xp_bar():
 	xpBar.max_value = GameData.player_data["player"]["xp_to_level"]
 	xpBar.value = GameData.player_data["player"]["xp"]
+	
+func update_wave_display():
+	waveLabel.wave = str(GameData.player_data["player"]["current_wave"])
 #endregion
