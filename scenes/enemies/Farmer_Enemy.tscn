@@ -103,7 +103,7 @@ loop = false
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_7kf4p")
 animation = &"moving"
-frame_progress = 0.655321
+frame_progress = 0.674683
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/CharacterBody2D"]
 shape = SubResource("RectangleShape2D_r48bn")

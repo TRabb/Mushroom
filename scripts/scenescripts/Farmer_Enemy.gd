@@ -52,7 +52,6 @@ func _on_survived():
 		GameData.player_data["player"]["health"] -= damage
 
 func current_position():
-	#print("Enemy global position: " + str($PathFollow2D.position/2))
 	return $PathFollow2D.position/2
 #endregion
 	

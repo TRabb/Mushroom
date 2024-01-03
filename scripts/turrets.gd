@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var type
 var enemy_array:Array = []
@@ -6,15 +6,18 @@ var built = false
 var enemy
 var readytofire= true
 var bullet
+var animation_frame
 
+@onready var animated_sprite = get_node("Marker2D/TurretSprite")
 
 func _ready():
 	if built:
-		self.get_node("Range/CollisionShape2D").get_shape().radius = .5 * GameData.tower_data[type]["range"]
+		self.get_node("Marker2D/Range/CollisionShape2D").get_shape().radius = .5 * GameData.tower_data[type]["range"]
 
 func _physics_process(delta):
 	if enemy_array.size() != 0 and built:
 		_select_enemy()
+		_turret_tracking()
 		#check to see if the bullet collision box and enemy collision box hit. if so, deal damage
 		if bullet != null and bullet.enemy_hit():
 			var enemy_hit_id = bullet.get_enemy_id()
@@ -28,6 +31,7 @@ func _physics_process(delta):
 			else:
 				print("Enemy is dead")
 		if readytofire:
+			_turret_animation()
 			_fire()
 	else:
 		enemy = null	
@@ -44,7 +48,7 @@ func _on_range_body_exited(body):
 		enemy_array.erase(body.get_parent())
 	else:
 		#check to make sure the range the bullet left is from the turret it was shot from
-		if self.get_node("Range").has_node("CharacterBody2D"):
+		if self.get_node("Marker2D/Range").has_node("CharacterBody2D"):
 		#if the bullet leaves the turret range remove it
 			body.queue_free()
 #endregion
@@ -62,17 +66,12 @@ func _select_enemy():
 func _create_bullet():
 	#creates the bullet scene and targets at the enemy
 	bullet = load("res://scenes/defenses/bullet.tscn").instantiate()
-	get_node("Range").add_child(bullet)
-	#self.add_child(bullet)
-	bullet.position = Vector2(0,0)
+	get_node("Marker2D/Range").add_child(bullet)
+	bullet.position = Vector2(22,0)
 	var turretGlobalPosition = Vector2(self.position.x, self.position.y)
 	var enemyPosition = enemy.current_position()
-	#print(self.name)
 	bullet.set_parent_turret(self.name)
-	
-	#print("enemyposition: " + str(enemyPosition))
-	#print("turret position: " + str(turretGlobalPosition))
-	#print("bullet destination: " + str(enemyPosition - turretGlobalPosition))
+		
 	#this gets the location of the enemy relative to the turret
 	var bulletDestination = enemyPosition - turretGlobalPosition
 	
@@ -83,7 +82,19 @@ func _fire():
 	enemy = enemy.get_parent()
 	_create_bullet()	
 	await(get_tree().create_timer(GameData.tower_data[type]["rate_of_fire"]).timeout)
-	readytofire = true
+	readytofire = true	
+	
 #endregion
 
+#region Utility Methods
+func _turret_animation():
+	#FIXME: Need to add an animation to turret2 or it will crash everytime it tries to fire
+	animated_sprite.play("shoot")
+	await get_tree().create_timer(1).timeout
+	animated_sprite.stop()
 	
+func _turret_tracking():
+	var marker2D = get_node("Marker2D")
+	marker2D.look_at(enemy.get_global_position())
+		
+#endregion

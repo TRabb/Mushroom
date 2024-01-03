@@ -9,13 +9,15 @@ radius = 0.01
 [node name="Turret2" type="Node2D"]
 script = ExtResource("1_5w0ty")
 
-[node name="TurretSprite" type="Sprite2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="TurretSprite" type="Sprite2D" parent="Marker2D"]
 texture = ExtResource("2_odpf2")
 
-[node name="Range" type="Area2D" parent="."]
+[node name="Range" type="Area2D" parent="Marker2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Marker2D/Range"]
 shape = SubResource("CircleShape2D_6skdg")
 
-[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
-[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]
+[connection signal="body_entered" from="Marker2D/Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Marker2D/Range" to="." method="_on_range_body_exited"]

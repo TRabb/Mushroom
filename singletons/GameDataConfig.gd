@@ -2,7 +2,7 @@ extends Node
 
 func reset():
 	#this is used when generating new maps/starting new games to reset the player values back to default
-	player_data.player.health = 1
+	player_data.player.health = 100
 	player_data.player.current_wave = 0
 	player_data.player.money = 100
 	player_data.player.current_level = 1
@@ -14,11 +14,13 @@ var tower_data = {
 		"damage": 20,
 		"rate_of_fire": 1.0,
 		"range": 300,
+		"bullet_speed": 850,
 		"cost":5},
 	"Turret2":{
 		"damage": 30,
 		"rate_of_fire": 1.0,
 		"range": 750,
+		"bullet_speed": 850,
 		"cost": 10}
 	}
 

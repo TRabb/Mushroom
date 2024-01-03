@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scripts/scenescripts/LevelUpPopup.gd" id="1_kuojf"]
 [ext_resource type="Texture2D" uid="uid://b5qrsqic15hh7" path="res://assets/ui/UIBackground.png" id="1_s87k0"]
 [ext_resource type="Texture2D" uid="uid://cwx40ltxw2sd7" path="res://assets/ui/LevelUpBackground.png" id="2_nydpc"]
-[ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/defenses/Turret1.png" id="4_ljrrh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi8r3"]
 texture = ExtResource("1_s87k0")
@@ -38,6 +37,9 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_pi8r3")
 sources/1 = SubResource("TileSetAtlasSource_r4am2")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ewsm7"]
+load_path = "res://.godot/imported/animation_turret12222.png-b9b73584db1623d013346d33a0a42644.ctex"
 
 [node name="LevelUpMenu" type="Control"]
 layout_mode = 3
@@ -95,7 +97,7 @@ autowrap_mode = 3
 [node name="Picture" type="TextureRect" parent="FirstChoice"]
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
-texture = ExtResource("4_ljrrh")
+texture = SubResource("CompressedTexture2D_ewsm7")
 stretch_mode = 5
 
 [node name="SelectButton" type="Button" parent="FirstChoice"]
@@ -123,7 +125,7 @@ autowrap_mode = 3
 [node name="Picture" type="TextureRect" parent="SecondChoice"]
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
-texture = ExtResource("4_ljrrh")
+texture = SubResource("CompressedTexture2D_ewsm7")
 stretch_mode = 5
 
 [node name="SelectButton" type="Button" parent="SecondChoice"]
@@ -151,7 +153,7 @@ autowrap_mode = 3
 [node name="Picture" type="TextureRect" parent="ThirdChoice"]
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
-texture = ExtResource("4_ljrrh")
+texture = SubResource("CompressedTexture2D_ewsm7")
 stretch_mode = 5
 
 [node name="SelectButton" type="Button" parent="ThirdChoice"]

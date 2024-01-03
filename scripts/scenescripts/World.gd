@@ -90,7 +90,7 @@ func _place_tower():
 		new_tower.built = true
 		get_node("Turrets").add_child(new_tower,true)
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
-		tileMap.set_cell(0, Vector2i(tileMap.local_to_map(build_location)), 3, Vector2i(0,0), 0)
+		tileMap.set_cell(-1, Vector2i(tileMap.local_to_map(build_location)), 3, Vector2i(0,0), 0)
 		print("Tower Placed")
 		#print("Build location: " + str(tileMap.local_to_map(build_location)))
 		#print("NoBuild tile location: " + str(mouse_position))
@@ -113,7 +113,7 @@ func _valid_build_location():
 	#tile is not a path
 	if tileMap.get_cell_source_id(0, mouse_position,false) != 0:
 		#tile is not already built on
-		if tileMap.get_cell_source_id(0, mouse_position,false) != 3:
+		if tileMap.get_cell_source_id(-1, mouse_position,false) != 3:
 			#tile is within the map
 			if mouse_position.y < PathGenInstance.path_config.map_height:
 				return true
