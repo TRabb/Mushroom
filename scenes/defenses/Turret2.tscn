@@ -11,7 +11,7 @@ script = ExtResource("1_5w0ty")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 
-[node name="TurretSprite" type="Sprite2D" parent="Marker2D"]
+[node name="Turret2" type="Sprite2D" parent="Marker2D"]
 texture = ExtResource("2_odpf2")
 
 [node name="Range" type="Area2D" parent="Marker2D"]

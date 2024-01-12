@@ -39,9 +39,9 @@ sources/0 = SubResource("TileSetAtlasSource_pi8r3")
 sources/1 = SubResource("TileSetAtlasSource_r4am2")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ewsm7"]
-load_path = "res://.godot/imported/animation_turret12222.png-b9b73584db1623d013346d33a0a42644.ctex"
 
 [node name="LevelUpMenu" type="Control"]
+process_mode = 2
 layout_mode = 3
 anchors_preset = 0
 offset_left = 256.0
@@ -100,7 +100,7 @@ layout_mode = 2
 texture = SubResource("CompressedTexture2D_ewsm7")
 stretch_mode = 5
 
-[node name="SelectButton" type="Button" parent="FirstChoice"]
+[node name="FirstSelectButton" type="Button" parent="FirstChoice"]
 layout_mode = 2
 text = "Select"
 
@@ -128,7 +128,7 @@ layout_mode = 2
 texture = SubResource("CompressedTexture2D_ewsm7")
 stretch_mode = 5
 
-[node name="SelectButton" type="Button" parent="SecondChoice"]
+[node name="SecondSelectButton" type="Button" parent="SecondChoice"]
 layout_mode = 2
 text = "Select"
 
@@ -156,8 +156,9 @@ layout_mode = 2
 texture = SubResource("CompressedTexture2D_ewsm7")
 stretch_mode = 5
 
-[node name="SelectButton" type="Button" parent="ThirdChoice"]
+[node name="ThirdSelectButton" type="Button" parent="ThirdChoice"]
 layout_mode = 2
 text = "Select"
 
 [connection signal="pressed" from="Close" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="FirstChoice/FirstSelectButton" to="." method="_on_first_select_button_pressed"]

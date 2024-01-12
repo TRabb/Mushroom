@@ -8,7 +8,7 @@ var readytofire= true
 var bullet
 var animation_frame
 
-@onready var animated_sprite = get_node("Marker2D/TurretSprite")
+@onready var animated_sprite = get_node("Marker2D/Turret1")
 
 func _ready():
 	if built:
@@ -70,7 +70,8 @@ func _create_bullet():
 	bullet.position = Vector2(22,0)
 	var turretGlobalPosition = Vector2(self.position.x, self.position.y)
 	var enemyPosition = enemy.current_position()
-	bullet.set_parent_turret(self.name)
+	var turretParent = self.get_node("Marker2D")
+	bullet.set_parent_turret(turretParent.get_child(0).get_name())
 		
 	#this gets the location of the enemy relative to the turret
 	var bulletDestination = enemyPosition - turretGlobalPosition

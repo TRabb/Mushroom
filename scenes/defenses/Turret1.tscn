@@ -124,7 +124,7 @@ script = ExtResource("1_h00dq")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 
-[node name="TurretSprite" type="AnimatedSprite2D" parent="Marker2D"]
+[node name="Turret1" type="AnimatedSprite2D" parent="Marker2D"]
 rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_iteyt")
 animation = &"shoot"

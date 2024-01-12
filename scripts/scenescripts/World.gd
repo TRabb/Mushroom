@@ -174,7 +174,7 @@ func _spawn_button_pressed():
 #region Enemy/Wave Methods#
 #adds an enemy to the path 			
 func _spawn_enemies(_wave_data):
-	#FIXME: MAYBE - Find solution to add each enemy to a single Path2D
+	#REFACTOR: MAYBE - Find solution to add each enemy to a single Path2D
 	#this will spawn enemy by scene name. each scene needs a corresponding script
 	for i in _wave_data:
 		var new_enemy = load("res://scenes/enemies/"+ i[0] +".tscn").instantiate()
@@ -198,7 +198,7 @@ func _retrieve_wave_data():
 	var current_wave = GameData.player_data["player"]["current_wave"]
 	#print("GameData wave: " + str(GameData.player_data["player"]["current_wave"]))
 	#randomly pick the size of the wave
-	#FIXME: Find a better solution to random wave size, feels to inconsistent
+	#REFACTOR: Find a better solution to random wave size, feels to inconsistent
 	_wave_size = _rng.randi_range(1, current_wave+1)
 
 	#clear all arrays used for wave generation
@@ -258,13 +258,14 @@ func _player_level_up():
 		_ui_node.update_playerLevel_display()
 		
 func _get_levelUp_screen():
-	#TODO: Have level up options actually do something
 	get_tree().paused = true
 	var levelUp = load("res://scenes/menus/LevelUpPopup.tscn")
-	_ui_node.add_child(levelUp.instantiate())		
+	_ui_node.add_child(levelUp.instantiate())
 #endregion
 
-
+func _get_levelUp_selecion():
+	
+	pass
 
 
 
