@@ -54,18 +54,20 @@ var player_data = {
 }
 
 #modifiers will only be applied to the appropriate turret group
-#want to weight these eventually
+#want to weight these eventually 
+#1.1 is 10% increase
+#.9 is 10% decrease
+#this is backwards for rate of fire. increasing rate of fire makes the number go down as it is the delay between shots
 var modifiers_data = {
 	"offensive":{
-		#"damage":40,
-		"rate_of_fire":.9
-		#"range":300,
-		#"bullet_speed":600,
+		"damage":40,
+		"rate_of_fire":.9,
+		"range":300,
+		"bullet_speed":600
+	},"defensive":{
+		"cost":20
 	}
-	#,"defensive":{
-		#"damage":40
-	#},
-	#"utility":{	
+	#,	"utility":{	
 		#"damage":40
 	#}
 }

@@ -30,7 +30,7 @@ func _ready():
 	for i in get_tree().get_nodes_in_group("build_buttons"):
 		i.pressed.connect(self._initiate_build_mode.bind(i.get_name()))
 	
-func _process(delta):
+func _process():
 	_ui_node.update_health_display()
 	if build_mode:
 		_get_tower_preview()
@@ -263,9 +263,6 @@ func _get_levelUp_screen():
 	_ui_node.add_child(levelUp.instantiate())
 #endregion
 
-func _get_levelUp_selecion():
-	
-	pass
 
 
 

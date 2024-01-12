@@ -31,7 +31,8 @@ func _physics_process(delta):
 			else:
 				print("Enemy is dead")
 		if readytofire:
-			_turret_animation()
+			#This is working for animations. Commenting out as I do not have all turrets animated
+			#_turret_animation()
 			_fire()
 	else:
 		enemy = null	

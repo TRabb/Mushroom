@@ -6,6 +6,7 @@ var hit
 var parentTurret
 var turretType
 
+#FIXME: If bullet speed gets too high the collision logic breaks and bullets will sit on enemies
 func _physics_process(delta):
 	#situation happens when shooting at enemy but hit a different deals damange to targeted enemy not hit enemy
 	hit = false

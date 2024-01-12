@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ogl1phqkvq6t"]
+[gd_scene load_steps=7 format=3 uid="uid://ogl1phqkvq6t"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/LevelUpPopup.gd" id="1_kuojf"]
 [ext_resource type="Texture2D" uid="uid://b5qrsqic15hh7" path="res://assets/ui/UIBackground.png" id="1_s87k0"]
@@ -38,8 +38,6 @@ tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_pi8r3")
 sources/1 = SubResource("TileSetAtlasSource_r4am2")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ewsm7"]
-
 [node name="LevelUpMenu" type="Control"]
 process_mode = 2
 layout_mode = 3
@@ -69,6 +67,7 @@ layer_0/tile_data = PackedInt32Array(196613, 65537, 2, 196614, 131073, 2, 131078
 
 [node name="Close" type="Button" parent="."]
 process_mode = 2
+visible = false
 layout_mode = 0
 offset_left = 384.0
 offset_top = 336.0
@@ -76,14 +75,39 @@ offset_right = 449.0
 offset_bottom = 362.0
 text = "Close"
 
+[node name="ButtonBox" type="HBoxContainer" parent="."]
+process_mode = 2
+layout_direction = 2
+layout_mode = 0
+offset_left = 123.0
+offset_top = 256.0
+offset_right = 709.0
+offset_bottom = 288.0
+theme_override_constants/separation = 182
+
+[node name="FirstSelectButton" type="Button" parent="ButtonBox"]
+process_mode = 2
+layout_mode = 2
+text = "Select"
+
+[node name="SecondSelectButton" type="Button" parent="ButtonBox"]
+process_mode = 2
+layout_mode = 2
+text = "Select"
+
+[node name="ThirdSelectButton" type="Button" parent="ButtonBox"]
+process_mode = 2
+layout_mode = 2
+text = "Select"
+
 [node name="FirstChoice" type="VBoxContainer" parent="."]
 clip_contents = true
-custom_minimum_size = Vector2(170, 239)
+custom_minimum_size = Vector2(170, 139)
 layout_mode = 2
 offset_left = 76.0
 offset_top = 73.0
 offset_right = 246.0
-offset_bottom = 312.0
+offset_bottom = 212.0
 theme_override_constants/separation = 40
 
 [node name="Name" type="Label" parent="FirstChoice"]
@@ -94,24 +118,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Picture" type="TextureRect" parent="FirstChoice"]
-custom_minimum_size = Vector2(70, 70)
-layout_mode = 2
-texture = SubResource("CompressedTexture2D_ewsm7")
-stretch_mode = 5
-
-[node name="FirstSelectButton" type="Button" parent="FirstChoice"]
-layout_mode = 2
-text = "Select"
-
 [node name="SecondChoice" type="VBoxContainer" parent="."]
 clip_contents = true
-custom_minimum_size = Vector2(170, 239)
 layout_mode = 0
 offset_left = 332.0
 offset_top = 73.0
 offset_right = 502.0
-offset_bottom = 312.0
+offset_bottom = 212.0
 theme_override_constants/separation = 40
 
 [node name="Name" type="Label" parent="SecondChoice"]
@@ -122,24 +135,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Picture" type="TextureRect" parent="SecondChoice"]
-custom_minimum_size = Vector2(70, 70)
-layout_mode = 2
-texture = SubResource("CompressedTexture2D_ewsm7")
-stretch_mode = 5
-
-[node name="SecondSelectButton" type="Button" parent="SecondChoice"]
-layout_mode = 2
-text = "Select"
-
 [node name="ThirdChoice" type="VBoxContainer" parent="."]
 clip_contents = true
-custom_minimum_size = Vector2(170, 239)
 layout_mode = 0
 offset_left = 588.0
 offset_top = 73.0
 offset_right = 758.0
-offset_bottom = 312.0
+offset_bottom = 212.0
 theme_override_constants/separation = 40
 
 [node name="Name" type="Label" parent="ThirdChoice"]
@@ -150,15 +152,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Picture" type="TextureRect" parent="ThirdChoice"]
-custom_minimum_size = Vector2(70, 70)
-layout_mode = 2
-texture = SubResource("CompressedTexture2D_ewsm7")
-stretch_mode = 5
-
-[node name="ThirdSelectButton" type="Button" parent="ThirdChoice"]
-layout_mode = 2
-text = "Select"
-
-[connection signal="pressed" from="Close" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="FirstChoice/FirstSelectButton" to="." method="_on_first_select_button_pressed"]
+[connection signal="pressed" from="ButtonBox/FirstSelectButton" to="." method="_on_first_select_button_pressed"]
+[connection signal="pressed" from="ButtonBox/SecondSelectButton" to="." method="_on_second_select_button_pressed"]
+[connection signal="pressed" from="ButtonBox/ThirdSelectButton" to="." method="_on_third_select_button_pressed"]
