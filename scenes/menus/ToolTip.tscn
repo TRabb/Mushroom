@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7isrxqmi4i82"]
+
+[ext_resource type="Script" path="res://scripts/scenescripts/ToolTip.gd" id="1_uljmk"]
+
+[node name="ToolTip" type="TextureRect"]
+script = ExtResource("1_uljmk")
+
+[node name="Text" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 18.0
+text = "Type:
+Damage:
+Attack Speed:
+Range:
+Bullet Speed:
+Cost:"

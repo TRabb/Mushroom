@@ -1,6 +1,7 @@
 extends Node2D
 #variables for nodes
 @onready var _ui_node = get_node("UI")
+@onready var _turrets_node = get_node("Turrets")
 #variables for turrets
 var build_mode = false
 var build_valid = false
@@ -30,13 +31,14 @@ func _ready():
 	for i in get_tree().get_nodes_in_group("build_buttons"):
 		i.pressed.connect(self._initiate_build_mode.bind(i.get_name()))
 	
-func _process():
+func _process(delta):
 	_ui_node.update_health_display()
 	if build_mode:
 		_get_tower_preview()
 	_ui_node.update_money_display()
 	_player_level_up()
 	_ui_node.update_wave_display()
+	#_show_tooltip()
 
 		
 func _unhandled_input(event):
@@ -92,9 +94,12 @@ func _place_tower():
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
 		tileMap.set_cell(-1, Vector2i(tileMap.local_to_map(build_location)), 3, Vector2i(0,0), 0)
 		print("Tower Placed")
+		var area2D = get_node("Turrets/" + str(new_tower.name) + "/Area2D")
+		area2D.process_mode = Node.PROCESS_MODE_ALWAYS
 		#print("Build location: " + str(tileMap.local_to_map(build_location)))
 		#print("NoBuild tile location: " + str(mouse_position))
 		GameData.player_data["player"]["money"] -= GameData.tower_data[build_type]["cost"]
+		
 		_cancel_build_mode()	
 	else:
 		_cancel_build_mode()
@@ -261,6 +266,35 @@ func _get_levelUp_screen():
 	get_tree().paused = true
 	var levelUp = load("res://scenes/menus/LevelUpPopup.tscn")
 	_ui_node.add_child(levelUp.instantiate())
+	
+#REFACTOR: Tooltip is not going away once user is no longer hovering
+#problem is the inside/outside area checks are happening within for loop
+#maybe move for loop to turrets class
+#func _show_tooltip():
+	##get current mouse position
+	#var mouse = get_global_mouse_position()
+	#await(get_tree().create_timer(1).timeout)
+	##if the mouse have not moved 
+	#if mouse == get_global_mouse_position():
+	##instantiate a tooltip scene
+		#
+		#if _ui_node.get_node("ToolTip")	== null:
+			#_ui_node.add_child(toolTipScene)
+			##toolTip = _ui_node.get_node("ToolTip")
+			#
+		#for turret in _turrets_node.get_children():
+			##print("turretAreaEntered: " + str(turret.insideArea))
+			##print("turretAreaExited: " + str(turret.outsideArea))
+			##if turret.insideArea == false:
+				##toolTipScene.kill()
+			#if turret.insideArea == true:
+					##gets the name of turret
+					#var turretName = turret.get_node("Marker2D").get_child(0).name
+					##give this function the name of the turret that is being hovered
+					#toolTipScene.set_hovered_turret(turretName)
+					#await(get_tree().create_timer(1).timeout)
+					#toolTipScene.update_turret_stats_display()
+	
 #endregion
 
 

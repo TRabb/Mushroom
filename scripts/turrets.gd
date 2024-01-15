@@ -98,5 +98,5 @@ func _turret_animation():
 func _turret_tracking():
 	var marker2D = get_node("Marker2D")
 	marker2D.look_at(enemy.get_global_position())
-		
+
 #endregion
