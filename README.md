@@ -16,7 +16,7 @@ The end of the path is the beginning of your empire. How long will you last?
 - ~~Towers automatically attack any enemy within range~~
 - ~~Towers have their own stats (Attack speed, range, damage)~~
 - ~~Towers can only be placed when user has enough currency~~
-- Tooltip that shows tower stats when placing
+- ~~Tooltip that shows tower stats when placing~~
   - Could include the active modifiers this tower has. This would need to show somewhere when user is not placing a tower
 
 **Enemy Related:**
@@ -29,7 +29,7 @@ The end of the path is the beginning of your empire. How long will you last?
 
 **Rougelike Related:**
 - After each wave the user modifies a certain stat of the enemy
-- After completing a set of waves the user can modifies a stat of a turret
+- After completing a set of waves the ~~user can modifies a stat of a turret~~
   - Both negative and positive modifiers
   - Both enemy and tower modifiers will carry over between sets of waves
  
