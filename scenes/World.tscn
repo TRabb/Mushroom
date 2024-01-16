@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4guxp2t8rcio"]
+[gd_scene load_steps=22 format=3 uid="uid://c4guxp2t8rcio"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/World.gd" id="1_gmu0c"]
 [ext_resource type="Texture2D" uid="uid://dgpprudxq3e5o" path="res://assets/map/path.png" id="2_j6w7t"]
@@ -7,12 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://bvu5rhs2knemn" path="res://assets/map/no_build.png" id="5_2eclw"]
 [ext_resource type="Script" path="res://scripts/scenescripts/UI.gd" id="6_10y7h"]
 [ext_resource type="Script" path="res://scripts/labels/money_label.gd" id="7_cexi4"]
-[ext_resource type="Texture2D" uid="uid://dj5obg17eix8q" path="res://assets/defenses/Turret1.png" id="7_d6x8h"]
+[ext_resource type="Texture2D" uid="uid://b0np3sqor4nwk" path="res://assets/defenses/Turret1.png" id="7_d6x8h"]
 [ext_resource type="Texture2D" uid="uid://htxvgyc4qc8m" path="res://assets/defenses/Turret2.png" id="8_ouqwp"]
 [ext_resource type="Script" path="res://scripts/labels/currentwave_label.gd" id="9_lpe64"]
 [ext_resource type="Script" path="res://scripts/labels/health_label.gd" id="9_rkryu"]
 [ext_resource type="Script" path="res://scripts/labels/playerlevel_label.gd" id="9_xk0jh"]
 [ext_resource type="Script" path="res://scripts/labels/xp_progressbar.gd" id="12_sftc7"]
+[ext_resource type="Script" path="res://scripts/scenescripts/ToolTip.gd" id="14_tfpss"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s7yxs"]
 texture = ExtResource("2_j6w7t")
@@ -172,6 +173,9 @@ layer_0/name = "Main"
 layer_0/tile_data = PackedInt32Array(720917, 65541, 0, 720916, 65541, 0, 720915, 65541, 0, 720914, 65541, 0, 720913, 65541, 0, 720912, 65541, 0, 720911, 65541, 0, 720910, 65541, 0, 720909, 65541, 0, 720908, 65541, 0, 720907, 65541, 0, 720906, 65541, 0, 720905, 65541, 0, 720904, 65541, 0, 720903, 65541, 0, 720902, 65541, 0, 720901, 65541, 0, 720900, 65541, 0, 720899, 65541, 0, 720898, 65541, 0, 720897, 65541, 0, 720896, 65541, 0, 786432, 65541, 0, 851968, 65541, 0, 917504, 65541, 0, 917505, 65541, 0, 851969, 65541, 0, 786433, 65541, 0, 786434, 65541, 0, 851970, 65541, 0, 917506, 65541, 0, 851971, 65541, 0, 786435, 65541, 0, 851972, 65541, 0, 917508, 65541, 0, 917507, 65541, 0, 786436, 65541, 0, 917509, 65541, 0, 851973, 65541, 0, 851974, 65541, 0, 786438, 65541, 0, 786437, 65541, 0, 917510, 65541, 0, 851975, 65541, 0, 786439, 65541, 0, 917512, 65541, 0, 917513, 65541, 0, 851977, 65541, 0, 786441, 65541, 0, 786440, 65541, 0, 851978, 65541, 0, 851976, 65541, 0, 851979, 65541, 0, 851980, 65541, 0, 851981, 65541, 0, 851982, 65541, 0, 851983, 65541, 0, 851984, 65541, 0, 851985, 65541, 0, 851986, 65541, 0, 851987, 65541, 0, 851988, 65541, 0, 851989, 65541, 0, 917525, 65541, 0, 917524, 65541, 0, 917523, 65541, 0, 917522, 65541, 0, 917521, 65541, 0, 917520, 65541, 0, 917511, 65541, 0, 917514, 65541, 0, 917515, 65541, 0, 917516, 65541, 0, 917517, 65541, 0, 917518, 65541, 0, 917519, 65541, 0, 786447, 65541, 0, 786446, 65541, 0, 786445, 65541, 0, 786444, 65541, 0, 786443, 65541, 0, 786442, 65541, 0, 786448, 65541, 0, 786449, 65541, 0, 786450, 65541, 0, 786451, 65541, 0, 786452, 65541, 0, 786453, 65541, 0)
 layer_1/name = "InventoryBackground"
 layer_1/tile_data = PackedInt32Array(917504, 131078, 3, 917505, 65542, 3, 917506, 6, 3, 786442, 65542, 0, 786443, 65542, 0, 851978, 131078, 1, 851979, 131078, 1, 851989, 131078, 0, 917525, 65542, 1, 917524, 131078, 1, 917523, 6, 2, 851988, 65542, 0, 851987, 6, 0, 786444, 131078, 0, 851980, 65542, 1, 786441, 6, 0, 851977, 6, 2)
+layer_2/name = "NoBuild"
+layer_2/z_index = -1
+layer_2/tile_data = PackedInt32Array()
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("6_10y7h")
@@ -282,3 +286,26 @@ value = 50.0
 script = ExtResource("12_sftc7")
 
 [node name="Turrets" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="Turrets"]
+wait_time = 1.5
+one_shot = true
+
+[node name="ToolTipRangeDisplay" type="Sprite2D" parent="Turrets"]
+
+[node name="ToolTip" type="TextureRect" parent="Turrets"]
+z_index = 1
+offset_right = 256.0
+offset_bottom = 128.0
+script = ExtResource("14_tfpss")
+
+[node name="Text" type="Label" parent="Turrets/ToolTip"]
+z_index = 2
+offset_right = 40.0
+offset_bottom = 18.0
+text = "Type:
+Damage:
+Attack Speed:
+Range:
+Bullet Speed:
+Cost:"

@@ -1,6 +1,7 @@
 extends Node2D
 #variables for nodes
 @onready var _ui_node = get_node("UI")
+@onready var _turrets_node = get_node("Turrets")
 #variables for turrets
 var build_mode = false
 var build_valid = false
@@ -37,6 +38,7 @@ func _process(delta):
 	_ui_node.update_money_display()
 	_player_level_up()
 	_ui_node.update_wave_display()
+	#_show_tooltip()
 
 		
 func _unhandled_input(event):
@@ -90,11 +92,14 @@ func _place_tower():
 		new_tower.built = true
 		get_node("Turrets").add_child(new_tower,true)
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
-		tileMap.set_cell(0, Vector2i(tileMap.local_to_map(build_location)), 3, Vector2i(0,0), 0)
+		tileMap.set_cell(-1, Vector2i(tileMap.local_to_map(build_location)), 3, Vector2i(0,0), 0)
 		print("Tower Placed")
+		var area2D = get_node("Turrets/" + str(new_tower.name) + "/Area2D")
+		area2D.process_mode = Node.PROCESS_MODE_ALWAYS
 		#print("Build location: " + str(tileMap.local_to_map(build_location)))
 		#print("NoBuild tile location: " + str(mouse_position))
 		GameData.player_data["player"]["money"] -= GameData.tower_data[build_type]["cost"]
+		
 		_cancel_build_mode()	
 	else:
 		_cancel_build_mode()
@@ -113,7 +118,7 @@ func _valid_build_location():
 	#tile is not a path
 	if tileMap.get_cell_source_id(0, mouse_position,false) != 0:
 		#tile is not already built on
-		if tileMap.get_cell_source_id(0, mouse_position,false) != 3:
+		if tileMap.get_cell_source_id(-1, mouse_position,false) != 3:
 			#tile is within the map
 			if mouse_position.y < PathGenInstance.path_config.map_height:
 				return true
@@ -174,7 +179,7 @@ func _spawn_button_pressed():
 #region Enemy/Wave Methods#
 #adds an enemy to the path 			
 func _spawn_enemies(_wave_data):
-	#FIXME: MAYBE - Find solution to add each enemy to a single Path2D
+	#REFACTOR: MAYBE - Find solution to add each enemy to a single Path2D
 	#this will spawn enemy by scene name. each scene needs a corresponding script
 	for i in _wave_data:
 		var new_enemy = load("res://scenes/enemies/"+ i[0] +".tscn").instantiate()
@@ -198,7 +203,7 @@ func _retrieve_wave_data():
 	var current_wave = GameData.player_data["player"]["current_wave"]
 	#print("GameData wave: " + str(GameData.player_data["player"]["current_wave"]))
 	#randomly pick the size of the wave
-	#FIXME: Find a better solution to random wave size, feels to inconsistent
+	#REFACTOR: Find a better solution to random wave size, feels to inconsistent
 	_wave_size = _rng.randi_range(1, current_wave+1)
 
 	#clear all arrays used for wave generation
@@ -258,13 +263,9 @@ func _player_level_up():
 		_ui_node.update_playerLevel_display()
 		
 func _get_levelUp_screen():
-	#TODO: Have level up options actually do something
 	get_tree().paused = true
 	var levelUp = load("res://scenes/menus/LevelUpPopup.tscn")
-	_ui_node.add_child(levelUp.instantiate())		
+	_ui_node.add_child(levelUp.instantiate())
+	
 #endregion
-
-
-
-
 

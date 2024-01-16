@@ -35,7 +35,7 @@ func _path_route_to_curve_2D() -> Curve2D:
 func on_hit(damage):
 	hp -= damage
 	_health_bar.value = hp
-	print("godot_enemy hp: " + str(hp))
+	#print("farmer_enemy hp: " + str(hp))
 	if hp <= 0:
 		_on_destroy()
 		
@@ -52,17 +52,16 @@ func _on_survived():
 		GameData.player_data["player"]["health"] -= damage
 
 func current_position():
-	#print("Enemy global position: " + str($PathFollow2D.position/2))
 	return $PathFollow2D.position/2
 #endregion
 	
 #region State Methods
 func _on_spawning_state_entered():
-	print("Spawn state")
+	#print("Spawn state")
 	$StateChart.send_event("to_travelling")
 
 func _on_travelling_state_entered():
-	print("Travelling state")
+	#print("Travelling state")
 	_moving_animation.play("moving")
 
 func _on_travelling_state_processing(delta):

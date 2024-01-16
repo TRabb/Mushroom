@@ -40,6 +40,14 @@ func update_tower_preview(new_position, color):
 	if get_node("TowerPreview/DragTower").modulate != Color(color):
 		get_node("TowerPreview/DragTower").modulate = Color(color)
 		get_node("TowerPreview/Sprite2D").modulate = Color(color)
+		
+func is_tower_preview():
+	#verify the tower is not a preview
+	if get_node("TowerPreview") == null:
+		return false
+	else:
+		return true
+	pass
 #endregion
 		
 #region Label Update Methods#

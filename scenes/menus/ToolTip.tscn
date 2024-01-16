@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b7isrxqmi4i82"]
+
+[node name="ToolTip" type="TextureRect"]
+
+[node name="Text" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 18.0
+text = "Type:
+Damage:
+Attack Speed:
+Range:
+Bullet Speed:
+Cost:"

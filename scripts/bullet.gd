@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
-var speed = 600
 var enemyLocation
 var enemy_hit_id
 var hit
 var parentTurret
 var turretType
 
+#FIXME: If bullet speed gets too high the collision logic breaks and bullets will sit on enemies
 func _physics_process(delta):
 	#situation happens when shooting at enemy but hit a different deals damange to targeted enemy not hit enemy
 	hit = false
-	var collision_info = move_and_collide(get_velocity().normalized() * delta * speed)
+	var collision_info = move_and_collide(get_velocity().normalized() * delta * GameData.tower_data[turretType]["bullet_speed"])
 	if collision_info:
 		hit = true
 		enemy_hit_id = collision_info.get_collider_id()

@@ -1,7 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfjaw2wpswk41"]
 
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_q1uij"]
-[ext_resource type="Texture2D" uid="uid://lvl7xl7mygqe" path="res://assets/defenses/bullet.png" id="2_atou7"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_knmwt"]
+load_path = "res://.godot/imported/bullet.png-82088aa0bf2c70474cc6241e1169fb95.ctex"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0vat4"]
 radius = 16.0
@@ -11,7 +13,7 @@ scale = Vector2(0.5, 0.5)
 script = ExtResource("1_q1uij")
 
 [node name="Bullet" type="Sprite2D" parent="."]
-texture = ExtResource("2_atou7")
+texture = SubResource("CompressedTexture2D_knmwt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0vat4")

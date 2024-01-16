@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://v0rb7qfq62wj"]
+[gd_scene load_steps=5 format=3 uid="uid://v0rb7qfq62wj"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/Turret2.gd" id="1_5w0ty"]
 [ext_resource type="Texture2D" uid="uid://htxvgyc4qc8m" path="res://assets/defenses/Turret2.png" id="2_odpf2"]
@@ -6,16 +6,28 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_6skdg"]
 radius = 0.01
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31b4t"]
+size = Vector2(64, 64)
+
 [node name="Turret2" type="Node2D"]
 script = ExtResource("1_5w0ty")
 
-[node name="TurretSprite" type="Sprite2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="Turret2" type="Sprite2D" parent="Marker2D"]
 texture = ExtResource("2_odpf2")
 
-[node name="Range" type="Area2D" parent="."]
+[node name="Range" type="Area2D" parent="Marker2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Marker2D/Range"]
 shape = SubResource("CircleShape2D_6skdg")
 
-[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
-[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_31b4t")
+
+[connection signal="body_entered" from="Marker2D/Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Marker2D/Range" to="." method="_on_range_body_exited"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
