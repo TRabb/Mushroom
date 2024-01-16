@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4guxp2t8rcio"]
+[gd_scene load_steps=22 format=3 uid="uid://c4guxp2t8rcio"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/World.gd" id="1_gmu0c"]
 [ext_resource type="Texture2D" uid="uid://dgpprudxq3e5o" path="res://assets/map/path.png" id="2_j6w7t"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/labels/health_label.gd" id="9_rkryu"]
 [ext_resource type="Script" path="res://scripts/labels/playerlevel_label.gd" id="9_xk0jh"]
 [ext_resource type="Script" path="res://scripts/labels/xp_progressbar.gd" id="12_sftc7"]
+[ext_resource type="Script" path="res://scripts/scenescripts/ToolTip.gd" id="14_tfpss"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s7yxs"]
 texture = ExtResource("2_j6w7t")
@@ -285,3 +286,26 @@ value = 50.0
 script = ExtResource("12_sftc7")
 
 [node name="Turrets" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="Turrets"]
+wait_time = 1.5
+one_shot = true
+
+[node name="ToolTipRangeDisplay" type="Sprite2D" parent="Turrets"]
+
+[node name="ToolTip" type="TextureRect" parent="Turrets"]
+z_index = 1
+offset_right = 256.0
+offset_bottom = 128.0
+script = ExtResource("14_tfpss")
+
+[node name="Text" type="Label" parent="Turrets/ToolTip"]
+z_index = 2
+offset_right = 40.0
+offset_bottom = 18.0
+text = "Type:
+Damage:
+Attack Speed:
+Range:
+Bullet Speed:
+Cost:"

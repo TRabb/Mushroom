@@ -29,5 +29,5 @@ shape = SubResource("RectangleShape2D_31b4t")
 
 [connection signal="body_entered" from="Marker2D/Range" to="." method="_on_range_body_entered"]
 [connection signal="body_exited" from="Marker2D/Range" to="." method="_on_range_body_exited"]
-[connection signal="mouse_entered" from="Area2D" to="." method="on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="on_area_2d_mouse_exited"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

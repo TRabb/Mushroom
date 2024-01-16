@@ -267,36 +267,5 @@ func _get_levelUp_screen():
 	var levelUp = load("res://scenes/menus/LevelUpPopup.tscn")
 	_ui_node.add_child(levelUp.instantiate())
 	
-#REFACTOR: Tooltip is not going away once user is no longer hovering
-#problem is the inside/outside area checks are happening within for loop
-#maybe move for loop to turrets class
-#func _show_tooltip():
-	##get current mouse position
-	#var mouse = get_global_mouse_position()
-	#await(get_tree().create_timer(1).timeout)
-	##if the mouse have not moved 
-	#if mouse == get_global_mouse_position():
-	##instantiate a tooltip scene
-		#
-		#if _ui_node.get_node("ToolTip")	== null:
-			#_ui_node.add_child(toolTipScene)
-			##toolTip = _ui_node.get_node("ToolTip")
-			#
-		#for turret in _turrets_node.get_children():
-			##print("turretAreaEntered: " + str(turret.insideArea))
-			##print("turretAreaExited: " + str(turret.outsideArea))
-			##if turret.insideArea == false:
-				##toolTipScene.kill()
-			#if turret.insideArea == true:
-					##gets the name of turret
-					#var turretName = turret.get_node("Marker2D").get_child(0).name
-					##give this function the name of the turret that is being hovered
-					#toolTipScene.set_hovered_turret(turretName)
-					#await(get_tree().create_timer(1).timeout)
-					#toolTipScene.update_turret_stats_display()
-	
 #endregion
-
-
-
 

@@ -8,11 +8,11 @@ func _ready():
 	self.hide()
 	pass
 
+func _process(delta):
+	self.position = get_global_mouse_position() + Vector2(16,-16)
+	pass	
 
-
-func update_turret_stats_display():
-	#get the hovered turret from World
-	#foreach through all of the key:value pairs for the correct turret
+func update_turret_toolTip():
 	#var hoveredTurretStats = GameData.tower_data.get(hoveredTurret)
 	#Stat is key
 	#hoveredTurretStats is value
@@ -31,3 +31,5 @@ func kill():
 func set_hovered_turret(turret):
 	hoveredTurret = turret
 	#print(hoveredTurret)
+
+
