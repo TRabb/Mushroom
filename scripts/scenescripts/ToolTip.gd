@@ -13,6 +13,7 @@ func _process(delta):
 	pass	
 
 func update_turret_toolTip():
+	#range is not included here at it has a visual display
 	#var hoveredTurretStats = GameData.tower_data.get(hoveredTurret)
 	#Stat is key
 	#hoveredTurretStats is value
@@ -20,7 +21,6 @@ func update_turret_toolTip():
 	textLabel.set_text("Type: " + str(GameData.tower_data[hoveredTurret]["group"]) + "
 						Damage: " + str(GameData.tower_data[hoveredTurret]["damage"]) + "
 						Attack Speed (per second): " + str(GameData.tower_data[hoveredTurret]["rate_of_fire"]) + "
-						Range: " + str(GameData.tower_data[hoveredTurret]["range"]) + "
 						Bullet Speed: " + str(GameData.tower_data[hoveredTurret]["bullet_speed"]) + "
 						Cost: " + str(GameData.tower_data[hoveredTurret]["cost"]))
 	pass

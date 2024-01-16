@@ -4,17 +4,20 @@ var type
 var enemy_array:Array = []
 var built = false
 var enemy
-var readytofire= true
+var readytofire  = true
 var bullet
 var animation_frame
-
-var turretName
+var hoveredTurretPosition
+var hoveredTurretName
 var test = false
+var hovering = false
+#var toolTip = get_parent().get_parent().get_node("ToolTip")
+var timeout = false
 
 @onready var toolTip = get_parent().get_node("ToolTip")
-@onready var timer = get_parent().get_node("Timer")
+#@onready var timer = get_parent().get_node("Timer")
+@onready var uiNode = get_parent().get_parent().get_node("UI")
 var range_texture
-#var timer
 @onready var animated_sprite = get_node("Marker2D/Turret1")
 
 func _ready():
@@ -44,6 +47,11 @@ func _physics_process(delta):
 	else:
 		enemy = null	
 
+func _process(delta):
+	if Input.is_action_pressed("mb_left"):
+		#check if the turret is being hovered. this prevents tooltips from showing when user is deciding to place a turret
+		if hovering:
+			_display_toolTip(hoveredTurretName)
 #region Turret Range Methods
 func _on_range_body_entered(body):
 	#check required so nodes in the Bullet group are not added to the enemy array
@@ -109,44 +117,36 @@ func _turret_tracking():
 
 #region ToolTip Methods
 func _on_area_2d_mouse_entered():
-	#surely there is a better way to do this..
-	var uiNode = get_parent().get_parent().get_node("UI")
-	if uiNode != null:
-		#check if the turret is in preview mode. this prevents tooltips from showing when user is deciding to place a turret
-		if uiNode.is_tower_preview() == false:
-			#delay here is set within the Turrets/Timer node
-			timer.start()
-			timer.connect("timeout", _display_toolTip)
+	#prevents area2d getting triggered when user is trying to place a turret
+	if uiNode.is_tower_preview() == false:
+		hovering = true
+		hoveredTurretPosition = self.position
+		hoveredTurretName = self.type
 
 func _on_area_2d_mouse_exited():
-	if timer != null:
-		timer.stop()
-		timer.set_wait_time(1.5)
-		if self.get_parent().get_node("RangeDisplay") != null:
-			self.get_parent().get_node("RangeDisplay").queue_free()
-		toolTip.hide()
-		if range_texture != null:
-			range_texture.hide()
+	hovering = false
+	toolTip.hide()
+	if range_texture != null:
+		range_texture.hide()
 
-func _display_toolTip():
+func _display_toolTip(turretName): 
+	#turrenName == hoveredTurretName
 	turretName = self.get_node("Marker2D").get_child(0).name
 	#give this function the name of the turret that is being hovered
 	toolTip.set_hovered_turret(turretName)
-	#displays the tooltip
+	#updates label with correct information and makes the tooltip visible
 	toolTip.update_turret_toolTip()
+	#creates and displays an outline of turret range
 	_create_range_display(turretName)
-	#creates a visual of how big the range of the turret is
 	
 func _create_range_display(turretName):
 	#poplates the ToolTipRangeDisplay sprite with the turrets range
-	var turretLocation = self.position
 	range_texture = toolTip.get_parent().get_node("ToolTipRangeDisplay")
 	var scaling = GameData.tower_data[turretName]["range"] / 600.0
 	range_texture.scale = Vector2(scaling,scaling)
+	range_texture.modulate = Color("ad54ff3c")
+	range_texture.position = hoveredTurretPosition
 	var texture = load("res://assets/defenses/range_overlay.png")
 	range_texture.texture = texture
-	range_texture.modulate = Color("ad54ff3c")
-	range_texture.position = turretLocation
 	range_texture.show()
-	
 #endregion
