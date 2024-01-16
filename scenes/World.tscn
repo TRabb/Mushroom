@@ -301,6 +301,7 @@ script = ExtResource("14_tfpss")
 
 [node name="Text" type="Label" parent="Turrets/ToolTip"]
 z_index = 2
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 18.0
 text = "Type:
