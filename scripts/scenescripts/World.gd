@@ -1,7 +1,6 @@
 extends Node2D
 #variables for nodes
 @onready var _ui_node = get_node("UI")
-@onready var _turrets_node = get_node("Turrets")
 #variables for turrets
 var build_mode = false
 var build_valid = false
@@ -31,7 +30,7 @@ func _ready():
 	for i in get_tree().get_nodes_in_group("build_buttons"):
 		i.pressed.connect(self._initiate_build_mode.bind(i.get_name()))
 	
-func _process(delta):
+func _process(_delta):
 	_ui_node.update_health_display()
 	if build_mode:
 		_get_tower_preview()
@@ -82,7 +81,7 @@ func _initiate_build_mode(tower_type):
 func _place_tower():
 	#mouse position in (px coordiates)
 	#map_to_local will give x,y coordinates
-	var mouse_position = tileMap.local_to_map(get_global_mouse_position())
+	#var mouse_position = tileMap.local_to_map(get_global_mouse_position())
 	
 	#build must be valid and inside of the map
 	if build_valid:
@@ -174,6 +173,11 @@ func _map_button_pressed():
 func _spawn_button_pressed():
 	_start_next_wave()
 	pass
+
+func _settings_button_pressed():
+	var settingsMenu = load("res://scenes/menus/Settings.tscn")
+	_ui_node.add_child(settingsMenu.instantiate())
+	pass
 #endregion#
 
 #region Enemy/Wave Methods#
@@ -188,6 +192,7 @@ func _spawn_enemies(_wave_data):
 		print(i[0] + " Spawned")
 	
 func _start_next_wave():
+	#TODO: If the user starts the next wave before all enemies are killed. Reward them.
 	var _wave_data = _retrieve_wave_data()
 	await(get_tree().create_timer(0.2).timeout)
 	_spawn_enemies(_wave_data)
