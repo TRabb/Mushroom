@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c4guxp2t8rcio"]
+[gd_scene load_steps=30 format=3 uid="uid://c4guxp2t8rcio"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/World.gd" id="1_gmu0c"]
 [ext_resource type="Texture2D" uid="uid://dgpprudxq3e5o" path="res://assets/map/path.png" id="2_j6w7t"]
@@ -8,7 +8,10 @@
 [ext_resource type="Script" path="res://scripts/scenescripts/UI.gd" id="6_10y7h"]
 [ext_resource type="Script" path="res://scripts/labels/money_label.gd" id="7_cexi4"]
 [ext_resource type="Texture2D" uid="uid://b0np3sqor4nwk" path="res://assets/defenses/Turret1.png" id="7_d6x8h"]
+[ext_resource type="Texture2D" uid="uid://b1567hke48jxs" path="res://assets/ui/play.png" id="7_kd8j0"]
+[ext_resource type="Texture2D" uid="uid://24n0e6y8hjog" path="res://assets/defenses/Turret1Hover.png" id="8_n34tm"]
 [ext_resource type="Texture2D" uid="uid://htxvgyc4qc8m" path="res://assets/defenses/Turret2.png" id="8_ouqwp"]
+[ext_resource type="Texture2D" uid="uid://b1tmep7s8d7a8" path="res://assets/defenses/Turret1Press.png" id="8_wwalq"]
 [ext_resource type="Script" path="res://scripts/labels/currentwave_label.gd" id="9_lpe64"]
 [ext_resource type="Script" path="res://scripts/labels/health_label.gd" id="9_rkryu"]
 [ext_resource type="Script" path="res://scripts/labels/playerlevel_label.gd" id="9_xk0jh"]
@@ -220,30 +223,25 @@ mouse_filter = 1
 theme_type_variation = &"Font"
 
 [node name="ButtonBar" type="VBoxContainer" parent="UI/HUD"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.029
-anchor_top = 0.877
-anchor_right = 0.093
-anchor_bottom = 0.971
-offset_left = 0.167999
-offset_top = 0.0799561
-offset_right = 0.0559998
-offset_bottom = -0.160095
+anchor_left = -0.000119317
+anchor_top = 0.866583
+anchor_right = 0.0684148
+anchor_bottom = 0.9335
+offset_left = 10.168
+offset_top = 5.07996
+offset_right = -22.328
+offset_bottom = 4.8399
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="SpawnEnemy" type="Button" parent="UI/HUD/ButtonBar"]
+[node name="TextureButton" type="TextureButton" parent="UI/HUD/ButtonBar"]
 layout_mode = 2
-text = "S"
-clip_text = true
-
-[node name="NewPath" type="Button" parent="UI/HUD/ButtonBar"]
-layout_mode = 2
-text = "G"
-clip_text = true
+texture_normal = ExtResource("7_kd8j0")
 
 [node name="BuildBar" type="TabContainer" parent="UI/HUD"]
 layout_mode = 0
@@ -266,13 +264,21 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qk6yf")
 layout_mode = 2
 
 [node name="Turret1" type="TextureButton" parent="UI/HUD/BuildBar/Offensive" groups=["build_buttons"]]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -3.0
+offset_right = 53.0
+offset_bottom = 45.0
 texture_normal = ExtResource("7_d6x8h")
+texture_pressed = ExtResource("8_wwalq")
+texture_hover = ExtResource("8_n34tm")
 
 [node name="Defensive" type="Control" parent="UI/HUD/BuildBar"]
 visible = false
 layout_mode = 2
 
 [node name="Turret2" type="TextureButton" parent="UI/HUD/BuildBar/Defensive" groups=["build_buttons"]]
+layout_mode = 0
 texture_normal = ExtResource("8_ouqwp")
 
 [node name="PlayerInfo" type="VBoxContainer" parent="UI/HUD"]
@@ -341,13 +347,23 @@ text = "Money:"
 script = ExtResource("7_cexi4")
 
 [node name="Settings" type="Button" parent="UI/HUD"]
+process_mode = 3
 layout_mode = 0
-offset_left = 1308.0
-offset_top = 14.0
-offset_right = 1397.0
-offset_bottom = 40.0
+offset_left = 1280.0
+offset_top = 897.0
+offset_right = 1369.0
+offset_bottom = 923.0
 text = "Settings
 "
+
+[node name="NewPath" type="Button" parent="UI/HUD"]
+process_mode = 3
+layout_mode = 2
+offset_left = 1280.0
+offset_top = 858.0
+offset_right = 1372.0
+offset_bottom = 884.0
+text = "new path"
 
 [node name="Turrets" type="Node2D" parent="."]
 

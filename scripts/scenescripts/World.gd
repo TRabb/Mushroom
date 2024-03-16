@@ -1,6 +1,7 @@
 extends Node2D
 #variables for nodes
 @onready var _ui_node = get_node("UI")
+@onready var _turrets_node = get_node("Turrets")
 #variables for turrets
 var build_mode = false
 var build_valid = false
@@ -9,12 +10,13 @@ var build_type
 var tower_type
 #variables for waves
 var enemies_in_wave = 0
+var waveMoving = false
 #variables for path generation
 var _path:Array[Vector2i] = []
 #onready variables
 @onready var tileMap = $Path
-@onready var spawnEnemyButton = $UI/HUD/ButtonBar/SpawnEnemy
-@onready var generateNewMapButton = $UI/HUD/ButtonBar/NewPath
+@onready var spawnEnemyButton = $UI/HUD/ButtonBar/TextureButton
+@onready var generateNewMapButton = $UI/HUD/NewPath
 @onready var buildBar = $UI/HUD/BuildBar
 
 
@@ -171,8 +173,15 @@ func _map_button_pressed():
 	GameData.reset()
 	
 func _spawn_button_pressed():
-	_start_next_wave()
-	pass
+	if(waveMoving == true):
+		spawnEnemyButton.texture_normal = load("res://assets/ui/play.png")
+		get_tree().paused = true
+		waveMoving = false
+	else:
+		spawnEnemyButton.texture_normal = load("res://assets/ui/pause.png")
+		_start_next_wave()
+		get_tree().paused = false
+		waveMoving = true
 
 func _settings_button_pressed():
 	var settingsMenu = load("res://scenes/menus/Settings.tscn")
@@ -245,6 +254,7 @@ func reload_game():
 	_complete_grid()
 	#reset() just resets the player dictionary to default values
 	GameData.reset()
+	get_tree().paused = false
 
 func is_player_dead():
 	if GameData.player_data["player"]["health"] <= 0:
