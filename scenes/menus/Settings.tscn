@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://br5d8vax8eaj2"]
+
+[ext_resource type="Script" path="res://scripts/scenescripts/Settings.gd" id="1_jqyp7"]
+
+[node name="Settings" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_jqyp7")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="VBoxContainer" parent="UI"]
+offset_left = 576.0
+offset_top = 256.0
+offset_right = 832.0
+offset_bottom = 704.0
+alignment = 1
+
+[node name="Resume" type="Button" parent="UI/HBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Label" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+text = "placeholder for various settings"
+
+[node name="MainMenu" type="Button" parent="UI/HBoxContainer"]
+layout_mode = 2
+text = "Main Menu
+"
+
+[connection signal="pressed" from="UI/HBoxContainer/Resume" to="." method="_resume_button_pressed"]
+[connection signal="pressed" from="UI/HBoxContainer/MainMenu" to="." method="_main_menu_button_pressed"]

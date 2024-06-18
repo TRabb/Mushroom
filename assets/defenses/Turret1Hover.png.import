@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk5bnb21sersl"
-path="res://.godot/imported/UIBackground.png-9d521395bec6943fc750c0f89258a1e9.ctex"
+uid="uid://24n0e6y8hjog"
+path="res://.godot/imported/Turret1Hover.png-76c383fad00035f8cc3dea9977b8185e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/UIBackground.png"
-dest_files=["res://.godot/imported/UIBackground.png-9d521395bec6943fc750c0f89258a1e9.ctex"]
+source_file="res://assets/defenses/Turret1Hover.png"
+dest_files=["res://.godot/imported/Turret1Hover.png-76c383fad00035f8cc3dea9977b8185e.ctex"]
 
 [params]
 

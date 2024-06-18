@@ -5,7 +5,7 @@ extends CanvasLayer
 @onready var healthLabel = $HUD/PlayerInfo/Health
 @onready var playerLevelLabel = $HUD/PlayerInfo/PlayerLevel
 @onready var waveLabel = $HUD/PlayerInfo/CurrentWave
-@onready var xpBar = $HUD/XPBar
+@onready var xpBar = $HUD/PlayerInfo/XPBar
 
 #region Tower Preview Methods
 func set_tower_preview(tower_type, mouse_position):
@@ -43,11 +43,10 @@ func update_tower_preview(new_position, color):
 		
 func is_tower_preview():
 	#verify the tower is not a preview
-	if get_node("TowerPreview") == null:
+	if get_node_or_null("TowerPreview") == null:
 		return false
 	else:
 		return true
-	pass
 #endregion
 		
 #region Label Update Methods#

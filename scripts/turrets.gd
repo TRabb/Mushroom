@@ -14,9 +14,9 @@ var hovering = false
 #var toolTip = get_parent().get_parent().get_node("ToolTip")
 var timeout = false
 
-@onready var toolTip = get_parent().get_node("ToolTip")
+@onready var toolTip = get_parent().get_node_or_null("ToolTip")
 #@onready var timer = get_parent().get_node("Timer")
-@onready var uiNode = get_parent().get_parent().get_node("UI")
+@onready var uiNode = get_parent().get_parent().get_node_or_null("UI")
 var range_texture
 @onready var animated_sprite = get_node("Marker2D/Turret1")
 
@@ -24,7 +24,7 @@ func _ready():
 	if built:
 		self.get_node("Marker2D/Range/CollisionShape2D").get_shape().radius = .5 * GameData.tower_data[type]["range"]
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if enemy_array.size() != 0 and built:
 		_select_enemy()
 		_turret_tracking()
@@ -47,7 +47,7 @@ func _physics_process(delta):
 	else:
 		enemy = null	
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_pressed("mb_left"):
 		#check if the turret is being hovered. this prevents tooltips from showing when user is deciding to place a turret
 		if hovering:
