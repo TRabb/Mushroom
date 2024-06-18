@@ -10,22 +10,23 @@ var build_type
 var tower_type
 #variables for waves
 var enemies_in_wave = 0
-var waveMoving = false
+var wavePaused = false
+var waveComplete = true
 #variables for path generation
 var _path:Array[Vector2i] = []
 #onready variables
 @onready var tileMap = $Path
-@onready var spawnEnemyButton = $UI/HUD/ButtonBar/TextureButton
+@onready var startWaveButton = $UI/HUD/ButtonBar/StartWave
 @onready var generateNewMapButton = $UI/HUD/NewPath
 @onready var buildBar = $UI/HUD/BuildBar
-
+@onready var currentWave = $UI/HUD/PlayerInfo/CurrentWave
 
 func _ready():
 	#gets a fresh scene every time it is switched too
 	#GameData.duplicate(true())
 	reload_game()
 	#TODO: Add a tooltip that shows the towers stats when you hover over the tower build button
-	spawnEnemyButton.pressed.connect(self._spawn_button_pressed)
+	startWaveButton.pressed.connect(self._startWave_button_pressed)
 	generateNewMapButton.pressed.connect(self._map_button_pressed)
 	
 	#allows each turret texturebutton in the build_buttons group to be clicked
@@ -40,6 +41,7 @@ func _process(_delta):
 	_player_level_up()
 	_ui_node.update_wave_display()
 	#_show_tooltip()
+	_is_wave_clear()
 
 		
 func _unhandled_input(event):
@@ -171,18 +173,22 @@ func _map_button_pressed():
 	get_tree().reload_current_scene()
 	print("Scene Reloaded")
 	GameData.reset()
-	
-func _spawn_button_pressed():
-	if(waveMoving == true):
-		spawnEnemyButton.texture_normal = load("res://assets/ui/play.png")
+		
+func _startWave_button_pressed():
+	if wavePaused:
+		#other logic for button changing to pause/play is in is_wave_clear
+		startWaveButton.texture_normal = load("res://assets/ui/play.png")
 		get_tree().paused = true
-		waveMoving = false
+		wavePaused = false
 	else:
-		spawnEnemyButton.texture_normal = load("res://assets/ui/pause.png")
-		_start_next_wave()
-		get_tree().paused = false
-		waveMoving = true
-
+		if waveComplete:
+			get_tree().paused = false
+			_start_next_wave()
+			wavePaused = true
+		else:
+			get_tree().paused = false
+			wavePaused = true
+		
 func _settings_button_pressed():
 	var settingsMenu = load("res://scenes/menus/Settings.tscn")
 	_ui_node.add_child(settingsMenu.instantiate())
@@ -205,9 +211,8 @@ func _start_next_wave():
 	var _wave_data = _retrieve_wave_data()
 	await(get_tree().create_timer(0.2).timeout)
 	_spawn_enemies(_wave_data)
-	
+		
 func _retrieve_wave_data():
-	#TODO: Pause/Unpause waves - user should still be able to build during this
 	var _wave_size = 0
 	var _spawnable_enemies:Array = []
 	var _wave_data:Array
@@ -243,6 +248,18 @@ func _retrieve_wave_data():
 		
 	enemies_in_wave = _wave_data.size()
 	return _wave_data
+	
+func _is_wave_clear():
+	#REFACTOR: This is going to break if more nodes are added to world scene
+	#FIXME: Start button delays changing to pause button on wave start
+	#gets count of child nodes of world. default is 3 when no enemies are spawned
+	var a = get_node(".").get_child_count()
+	if(a == 3):
+		waveComplete = true
+		startWaveButton.texture_normal = load("res://assets/ui/play.png")
+	else:
+		waveComplete = false
+		startWaveButton.texture_normal = load("res://assets/ui/pause.png")
 #endregion
 
 
@@ -281,6 +298,6 @@ func _get_levelUp_screen():
 	get_tree().paused = true
 	var levelUp = load("res://scenes/menus/LevelUpPopup.tscn")
 	_ui_node.add_child(levelUp.instantiate())
-	
+
 #endregion
 

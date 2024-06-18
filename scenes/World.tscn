@@ -226,10 +226,10 @@ theme_type_variation = &"Font"
 process_mode = 3
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.000119317
-anchor_top = 0.866583
+anchor_left = -0.000119318
+anchor_top = 0.871792
 anchor_right = 0.0684148
-anchor_bottom = 0.9335
+anchor_bottom = 0.994958
 offset_left = 10.168
 offset_top = 5.07996
 offset_right = -22.328
@@ -239,7 +239,7 @@ grow_vertical = 2
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureButton" type="TextureButton" parent="UI/HUD/ButtonBar"]
+[node name="StartWave" type="TextureButton" parent="UI/HUD/ButtonBar"]
 layout_mode = 2
 texture_normal = ExtResource("7_kd8j0")
 
