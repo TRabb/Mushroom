@@ -54,12 +54,6 @@ func _process(_delta):
 		if hovering:
 			_display_toolTip(hoveredTurretName)
 #region Turret Range Methods
-func _on_range_body_entered(body):
-	if body.is_in_group("Enemy"):
-		#check required so nodes in the Bullet group are not added to the enemy array
-			enemy_array.append(body.get_parent())
-
-
 func _on_range_body_entered_utility(body):
 	var turretName
 	if body.is_in_group("Turret"):
@@ -72,6 +66,11 @@ func _on_range_body_entered_utility(body):
 					if not turret_array.has(turretName):
 						turret_array.append(turretName)
 						self.get_parent().turrets_dict[turretName]["damage"] += 1000
+						
+func _on_range_body_entered(body):
+	if body.is_in_group("Enemy"):
+		#check required so nodes in the Bullet group are not added to the enemy array
+			enemy_array.append(body.get_parent())
 
 func _on_range_body_exited_utility(body):
 	var turretName
@@ -91,25 +90,6 @@ func _on_range_body_exited(body):
 		#if the bullet leaves the turret range remove it
 			body.queue_free()
 			
-func _on_range_area_entered(area):
-	#FIXME: This buff is applying when the ranges areas are within eachother
-	#I want the turret node to be placed in the utility turret range for buff
-	var turretName
-	#need this check as before the tower was placed it was adding the buffs
-	if uiNode.get_node_or_null("TowerPreview") == null:
-	#get all other turrets that are within range
-		if area.find_parent("Turret*") != null:
-			turretName = area.find_parent("Turret*").get_name()
-			if not turret_array.has(turretName):
-				turret_array.append(turretName)
-				self.get_parent().turrets_dict[turretName]["damage"] += 1000
-
-func _on_range_area_exited(area):
-	var turretName
-	if area.find_parent("Turret*") != null:
-		turretName = area.find_parent("Turret*").get_name()
-		if turret_array.has(turretName):
-			turret_array.erase(turretName)
 #endregion
 
 #region Turret Shooting Methods
