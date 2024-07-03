@@ -29,14 +29,21 @@ var tower_data = {
 		"range": 300,
 		"bullet_speed": 850,
 		"cost":5,
-		"group":"offensive"},
+		"group":"Offensive"},
 	"Turret2":{
 		"damage": 30,
 		"rate_of_fire": 1.0,
 		"range": 750,
 		"bullet_speed": 850,
 		"cost": 10,
-		"group":"defensive"}
+		"group":"Defensive"},
+	"Turret3":{
+		"damage": 5,
+		"rate_of_fire":0,
+		"range": 500,
+		"bullet_speed": 0,
+		"cost": 25,
+		"group":"Utility"}
 	}
 
 var enemy_data = {
@@ -78,7 +85,8 @@ var modifiers_data = {
 		"range":300,
 		"bullet_speed":600
 	},"defensive":{
-		"cost":20
+		"cost":20,
+		"rate_of_fire":.5
 	}
 	#,	"utility":{	
 		#"damage":40

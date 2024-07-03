@@ -12,8 +12,11 @@ func _physics_process(delta):
 	hit = false
 	var collision_info = move_and_collide(get_velocity().normalized() * delta * GameData.tower_data[turretType]["bullet_speed"])
 	if collision_info:
-		hit = true
-		enemy_hit_id = collision_info.get_collider_id()
+		if collision_info.get_collider().name == "TurretBody":
+			hit = false
+		else:
+			hit = true
+			enemy_hit_id = collision_info.get_collider_id()
 
 func get_enemy_location(location:Vector2):
 	enemyLocation = location

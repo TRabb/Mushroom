@@ -13,10 +13,11 @@ var test = false
 var hovering = false
 #var toolTip = get_parent().get_parent().get_node("ToolTip")
 var timeout = false
+var turret_array:Array = []
 
 @onready var toolTip = get_parent().get_node_or_null("ToolTip")
 #@onready var timer = get_parent().get_node("Timer")
-@onready var uiNode = get_parent().get_parent().get_node_or_null("UI")
+@onready var uiNode = get_node("/root/World/UI")
 var range_texture
 @onready var animated_sprite = get_node("Marker2D/Turret1")
 
@@ -54,65 +55,112 @@ func _process(_delta):
 			_display_toolTip(hoveredTurretName)
 #region Turret Range Methods
 func _on_range_body_entered(body):
-	#check required so nodes in the Bullet group are not added to the enemy array
-	if not body.is_in_group("Bullet"):
-		enemy_array.append(body.get_parent())
+	if body.is_in_group("Enemy"):
+		#check required so nodes in the Bullet group are not added to the enemy array
+			enemy_array.append(body.get_parent())
 
+
+func _on_range_body_entered_utility(body):
+	var turretName
+	if body.is_in_group("Turret"):
+			#need this check as before the tower was placed it was adding the buffs
+			if uiNode.get_node_or_null("TowerPreview") == null:
+				print("turret in area")
+			#get all other turrets that are within range
+				if body.find_parent("Turret*") != null:
+					turretName = body.find_parent("Turret*").get_name()
+					if not turret_array.has(turretName):
+						turret_array.append(turretName)
+						self.get_parent().turrets_dict[turretName]["damage"] += 1000
+
+func _on_range_body_exited_utility(body):
+	var turretName
+	if body.is_in_group("Turret"):
+		if body.find_parent("Turret*") != null:
+			turretName = body.find_parent("Turret*").get_name()
+			if turret_array.has(turretName):
+				turret_array.erase(turretName)
+	
 func _on_range_body_exited(body):
 	#check required so nodes that are enemies are not removed from the enemy array when they leave a turrets range
 	if not body.is_in_group("Bullet"):
 		enemy_array.erase(body.get_parent())
 	else:
 		#check to make sure the range the bullet left is from the turret it was shot from
-		if self.get_node("Marker2D/Range").has_node("CharacterBody2D"):
+		if self.get_node("Marker2D/Range").has_node("BulletCharacterBody2D"):
 		#if the bullet leaves the turret range remove it
 			body.queue_free()
+			
+func _on_range_area_entered(area):
+	#FIXME: This buff is applying when the ranges areas are within eachother
+	#I want the turret node to be placed in the utility turret range for buff
+	var turretName
+	#need this check as before the tower was placed it was adding the buffs
+	if uiNode.get_node_or_null("TowerPreview") == null:
+	#get all other turrets that are within range
+		if area.find_parent("Turret*") != null:
+			turretName = area.find_parent("Turret*").get_name()
+			if not turret_array.has(turretName):
+				turret_array.append(turretName)
+				self.get_parent().turrets_dict[turretName]["damage"] += 1000
+
+func _on_range_area_exited(area):
+	var turretName
+	if area.find_parent("Turret*") != null:
+		turretName = area.find_parent("Turret*").get_name()
+		if turret_array.has(turretName):
+			turret_array.erase(turretName)
 #endregion
 
 #region Turret Shooting Methods
 func _select_enemy():
-	#select the enemy that has the furthest progress down the curve2d
-	var enemy_progress_array = []
-	for i in enemy_array:
-		enemy_progress_array.append(i.get_progress())
-	var max_progress = enemy_progress_array.max()
-	var enemy_index = enemy_progress_array.find(max_progress)
-	enemy = enemy_array[enemy_index]
+	if GameData.tower_data[type]["rate_of_fire"] > 0:
+		#select the enemy that has the furthest progress down the curve2d
+		var enemy_progress_array = []
+		for i in enemy_array:
+			if i.get_progress() != null:
+				enemy_progress_array.append(i.get_progress())
+		var max_progress = enemy_progress_array.max()
+		var enemy_index = enemy_progress_array.find(max_progress)
+		enemy = enemy_array[enemy_index]
 	
 func _create_bullet():
-	#creates the bullet scene and targets at the enemy
-	bullet = load("res://scenes/defenses/bullet.tscn").instantiate()
-	get_node("Marker2D/Range").add_child(bullet)
-	bullet.position = Vector2(22,0)
-	var turretGlobalPosition = Vector2(self.position.x, self.position.y)
-	var enemyPosition = enemy.current_position()
-	var turretParent = self.get_node("Marker2D")
-	bullet.set_parent_turret(turretParent.get_child(0).get_name())
+	if GameData.tower_data[type]["rate_of_fire"] > 0:
+		#creates the bullet scene and targets at the enemy
+		bullet = load("res://scenes/defenses/bullet.tscn").instantiate()
+		get_node("Marker2D/Range").add_child(bullet)
+		bullet.position = Vector2(22,0)
+		var turretGlobalPosition = Vector2(self.position.x, self.position.y)
+		var enemyPosition = enemy.current_position()
+		var turretParent = self.get_node("Marker2D")
+		bullet.set_parent_turret(turretParent.get_child(0).get_name())
+			
+		#this gets the location of the enemy relative to the turret
+		var bulletDestination = enemyPosition - turretGlobalPosition
 		
-	#this gets the location of the enemy relative to the turret
-	var bulletDestination = enemyPosition - turretGlobalPosition
-	
-	bullet.set_velocity(bulletDestination - bullet.position)
+		bullet.set_velocity(bulletDestination - bullet.position)
 	
 func _fire():
-	readytofire = false
-	enemy = enemy.get_parent()
-	_create_bullet()	
-	await(get_tree().create_timer(GameData.tower_data[type]["rate_of_fire"]).timeout)
-	readytofire = true	
+	if GameData.tower_data[type]["rate_of_fire"] > 0:
+		readytofire = false
+		enemy = enemy.get_parent()
+		_create_bullet()	
+		await(get_tree().create_timer(GameData.tower_data[type]["rate_of_fire"]).timeout)
+		readytofire = true	
 	
 #endregion
 
 #region Utility Methods
 func _turret_animation():
 	#FIXME: Need to add an animation to turret2 or it will crash everytime it tries to fire
-	animated_sprite.play("shoot")
+	#animated_sprite.play("shoot")
 	await get_tree().create_timer(1).timeout
-	animated_sprite.stop()
+	#animated_sprite.stop()
 	
 func _turret_tracking():
-	var marker2D = get_node("Marker2D")
-	marker2D.look_at(enemy.get_global_position())
+	if GameData.tower_data[type]["rate_of_fire"] > 0:
+		var marker2D = get_node("Marker2D")
+		marker2D.look_at(enemy.get_global_position())
 #endregion
 
 #region ToolTip Methods
@@ -121,7 +169,8 @@ func _on_area_2d_mouse_entered():
 	if uiNode.is_tower_preview() == false:
 		hovering = true
 		hoveredTurretPosition = self.position
-		hoveredTurretName = self.type
+		hoveredTurretName = self.name
+		print("hoveredTurretName " + hoveredTurretName)
 
 func _on_area_2d_mouse_exited():
 	hovering = false
@@ -130,10 +179,9 @@ func _on_area_2d_mouse_exited():
 		range_texture.hide()
 
 func _display_toolTip(turretName): 
-	#turrenName == hoveredTurretName
 	turretName = self.get_node("Marker2D").get_child(0).name
 	#give this function the name of the turret that is being hovered
-	toolTip.set_hovered_turret(turretName)
+	toolTip.set_hovered_turret(hoveredTurretName)
 	#updates label with correct information and makes the tooltip visible
 	toolTip.update_turret_toolTip()
 	#creates and displays an outline of turret range

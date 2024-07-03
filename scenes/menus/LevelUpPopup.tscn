@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://ogl1phqkvq6t"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/LevelUpPopup.gd" id="1_kuojf"]
-[ext_resource type="Texture2D" uid="uid://b5qrsqic15hh7" path="res://assets/ui/UIBackground.png" id="1_s87k0"]
+[ext_resource type="Texture2D" uid="uid://dk5bnb21sersl" path="res://assets/ui/UIBackground.png" id="1_s87k0"]
 [ext_resource type="Texture2D" uid="uid://cwx40ltxw2sd7" path="res://assets/ui/LevelUpBackground.png" id="2_nydpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi8r3"]

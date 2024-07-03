@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c4guxp2t8rcio"]
+[gd_scene load_steps=32 format=3 uid="uid://c4guxp2t8rcio"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/World.gd" id="1_gmu0c"]
 [ext_resource type="Texture2D" uid="uid://dgpprudxq3e5o" path="res://assets/map/path.png" id="2_j6w7t"]
@@ -15,8 +15,10 @@
 [ext_resource type="Script" path="res://scripts/labels/currentwave_label.gd" id="9_lpe64"]
 [ext_resource type="Script" path="res://scripts/labels/health_label.gd" id="9_rkryu"]
 [ext_resource type="Script" path="res://scripts/labels/playerlevel_label.gd" id="9_xk0jh"]
+[ext_resource type="Texture2D" uid="uid://bdtpffg30di5k" path="res://assets/defenses/Turret3.png" id="12_2gmao"]
 [ext_resource type="Script" path="res://scripts/labels/xp_progressbar.gd" id="12_sftc7"]
 [ext_resource type="Script" path="res://scripts/scenescripts/ToolTip.gd" id="14_tfpss"]
+[ext_resource type="Script" path="res://scripts/turret_dictionary.gd" id="18_m7k67"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s7yxs"]
 texture = ExtResource("2_j6w7t")
@@ -149,14 +151,13 @@ sources/5 = SubResource("TileSetAtlasSource_q46qh")
 sources/0 = SubResource("TileSetAtlasSource_s7yxs")
 sources/6 = SubResource("TileSetAtlasSource_jjqeh")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilm05"]
-content_margin_left = 3.0
-content_margin_right = 3.0
-bg_color = Color(0.678431, 0.454902, 0.360784, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yiibq"]
+bg_color = Color(0, 0, 0, 0.341176)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
 border_color = Color(0, 0, 0, 1)
+expand_margin_left = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdka0"]
 content_margin_left = 3.0
@@ -247,14 +248,14 @@ texture_normal = ExtResource("7_kd8j0")
 layout_mode = 0
 offset_left = 576.0
 offset_top = 842.0
-offset_right = 832.0
+offset_right = 896.0
 offset_bottom = 944.0
 theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
 theme_override_colors/font_unselected_color = Color(0, 0, 0, 1)
 theme_override_constants/side_margin = 3
 theme_override_constants/outline_size = 0
-theme_override_styles/tab_selected = SubResource("StyleBoxFlat_ilm05")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_yiibq")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_rdka0")
 theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_tw6x3")
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_ctu7r")
@@ -280,6 +281,14 @@ layout_mode = 2
 [node name="Turret2" type="TextureButton" parent="UI/HUD/BuildBar/Defensive" groups=["build_buttons"]]
 layout_mode = 0
 texture_normal = ExtResource("8_ouqwp")
+
+[node name="Utility" type="Control" parent="UI/HUD/BuildBar"]
+visible = false
+layout_mode = 2
+
+[node name="Turret3" type="TextureButton" parent="UI/HUD/BuildBar/Utility" groups=["build_buttons"]]
+layout_mode = 0
+texture_normal = ExtResource("12_2gmao")
 
 [node name="PlayerInfo" type="VBoxContainer" parent="UI/HUD"]
 layout_mode = 1
@@ -365,7 +374,17 @@ offset_right = 1372.0
 offset_bottom = 884.0
 text = "new path"
 
+[node name="Check" type="Button" parent="UI/HUD"]
+layout_mode = 0
+offset_left = 1088.0
+offset_top = 923.0
+offset_right = 1216.0
+offset_bottom = 944.0
+text = "Check turret
+"
+
 [node name="Turrets" type="Node2D" parent="."]
+script = ExtResource("18_m7k67")
 
 [node name="Timer" type="Timer" parent="Turrets"]
 wait_time = 1.5

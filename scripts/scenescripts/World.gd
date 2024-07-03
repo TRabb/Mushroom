@@ -94,6 +94,33 @@ func _place_tower():
 		new_tower.type = build_type
 		new_tower.built = true
 		get_node("Turrets").add_child(new_tower,true)
+		
+		#TODO: Convert all instanced of GameData.TowerData to use turrets_dict
+		#turrets_dict contains all currently placed turret stats
+		#GameData.TowerData can be used to modify turret types as a whole
+		match build_type:
+			"Turret1":
+				_turrets_node.turrets_dict[new_tower.name] = {"type": GameData.tower_data[build_type]["group"],
+				"damage": GameData.tower_data[build_type]["damage"],
+				"rate_of_fire": GameData.tower_data[build_type]["rate_of_fire"],
+				"range": GameData.tower_data[build_type]["range"],
+				"bullet_speed": GameData.tower_data[build_type]["bullet_speed"],
+				"cost": GameData.tower_data[build_type]["cost"]}
+			"Turret2":
+				_turrets_node.turrets_dict[new_tower.name] = {"type": GameData.tower_data[build_type]["group"],
+				"damage": GameData.tower_data[build_type]["damage"],
+				"rate_of_fire": GameData.tower_data[build_type]["rate_of_fire"],
+				"range": GameData.tower_data[build_type]["range"],
+				"bullet_speed": GameData.tower_data[build_type]["bullet_speed"],
+				"cost": GameData.tower_data[build_type]["cost"]}
+			"Turret3":
+				_turrets_node.turrets_dict[new_tower.name] = {"type": GameData.tower_data[build_type]["group"],
+				"damage": GameData.tower_data[build_type]["damage"],
+				"rate_of_fire": GameData.tower_data[build_type]["rate_of_fire"],
+				"range": GameData.tower_data[build_type]["range"],
+				"bullet_speed": GameData.tower_data[build_type]["bullet_speed"],
+				"cost": GameData.tower_data[build_type]["cost"]}						
+				
 		#set the tile behind the sprite to no_build - this is used to prevent building towers on top of eachother
 		tileMap.set_cell(-1, Vector2i(tileMap.local_to_map(build_location)), 3, Vector2i(0,0), 0)
 		print("Tower Placed")

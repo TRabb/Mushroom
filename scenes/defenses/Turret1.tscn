@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dta6cqb1jujj2"]
+[gd_scene load_steps=22 format=3 uid="uid://dta6cqb1jujj2"]
 
 [ext_resource type="Script" path="res://scripts/scenescripts/Turret1.gd" id="1_h00dq"]
 [ext_resource type="Texture2D" uid="uid://nej2hvylo0cb" path="res://assets/defenses/animation_turret1.png" id="2_61kpu"]
@@ -122,6 +122,9 @@ radius = 0.01
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tha52"]
 size = Vector2(64, 64)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4fq0"]
+size = Vector2(64, 64)
+
 [node name="Turret1" type="Node2D"]
 script = ExtResource("1_h00dq")
 
@@ -143,6 +146,11 @@ process_mode = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_tha52")
+
+[node name="TurretBody" type="CharacterBody2D" parent="." groups=["Turret"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TurretBody"]
+shape = SubResource("RectangleShape2D_i4fq0")
 
 [connection signal="body_entered" from="Marker2D/Range" to="." method="_on_range_body_entered"]
 [connection signal="body_exited" from="Marker2D/Range" to="." method="_on_range_body_exited"]

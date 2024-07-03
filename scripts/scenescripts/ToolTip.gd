@@ -1,6 +1,7 @@
 extends TextureRect
 
 @onready var textLabel = $Text
+@onready var turrets_node = get_node("/root/World/Turrets")
 
 var hoveredTurret
 # Called when the node enters the scene tree for the first time.
@@ -18,11 +19,11 @@ func update_turret_toolTip():
 	#Stat is key
 	#hoveredTurretStats is value
 	self.show()
-	textLabel.set_text("Type: " + str(GameData.tower_data[hoveredTurret]["group"]) + "
-						Damage: " + str(GameData.tower_data[hoveredTurret]["damage"]) + "
-						Attack Speed (per second): " + str(GameData.tower_data[hoveredTurret]["rate_of_fire"]) + "
-						Bullet Speed: " + str(GameData.tower_data[hoveredTurret]["bullet_speed"]) + "
-						Cost: " + str(GameData.tower_data[hoveredTurret]["cost"]))
+	textLabel.set_text("Type: " + str(turrets_node.turrets_dict[hoveredTurret]["type"]) + "
+						Damage: " + str(turrets_node.turrets_dict[hoveredTurret]["damage"]) + "
+						Attack Speed (per second): " + str(turrets_node.turrets_dict[hoveredTurret]["rate_of_fire"]) + "
+						Bullet Speed: " + str(turrets_node.turrets_dict[hoveredTurret]["bullet_speed"]) + "
+						Cost: " + str(turrets_node.turrets_dict[hoveredTurret]["cost"]))
 	pass
 
 func kill():
