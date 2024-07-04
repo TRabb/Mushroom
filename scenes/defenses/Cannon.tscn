@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://dta6cqb1jujj2"]
 
-[ext_resource type="Script" path="res://scripts/scenescripts/Turret1.gd" id="1_vush0"]
+[ext_resource type="Script" path="res://scripts/scenescripts/Cannon.gd" id="1_vush0"]
 [ext_resource type="Texture2D" uid="uid://nej2hvylo0cb" path="res://assets/defenses/animation_turret1.png" id="2_qfi41"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_61wh3"]
