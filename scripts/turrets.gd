@@ -14,6 +14,7 @@ var hovering = false
 #var toolTip = get_parent().get_parent().get_node("ToolTip")
 var timeout = false
 var turret_array:Array = []
+var turret_name
 
 @onready var toolTip = get_parent().get_node_or_null("ToolTip")
 #@onready var timer = get_parent().get_node("Timer")
@@ -38,7 +39,7 @@ func _physics_process(_delta):
 				var enemy_hit = instance_from_id(enemy_hit_id).get_parent().get_parent()
 			#path2d is required to use the functions within the enemy scripts
 				if enemy_hit is Path2D:
-					enemy_hit.on_hit(GameData.tower_data[type]["damage"])
+					enemy_hit.on_hit(self.get_parent().turrets_dict[turret_name]["damage"])
 			else:
 				print("Enemy is dead")
 		if readytofire:
@@ -61,11 +62,12 @@ func _on_range_body_entered_utility(body):
 			if uiNode.get_node_or_null("TowerPreview") == null:
 				print("turret in area")
 			#get all other turrets that are within range
-				if body.find_parent("Turret*") != null:
-					turretName = body.find_parent("Turret*").get_name()
+				if body.get_parent() != null:
+					turretName = body.get_parent().get_name()
 					if not turret_array.has(turretName):
 						turret_array.append(turretName)
-						self.get_parent().turrets_dict[turretName]["damage"] += 1000
+						if not body.is_in_group("Utility"):
+							self.get_parent().turrets_dict[turretName]["damage"] += 1000
 						
 func _on_range_body_entered(body):
 	if body.is_in_group("Enemy"):
@@ -94,6 +96,7 @@ func _on_range_body_exited(body):
 
 #region Turret Shooting Methods
 func _select_enemy():
+	#print("select enemy turret name: " + turret_name)
 	if GameData.tower_data[type]["rate_of_fire"] > 0:
 		#select the enemy that has the furthest progress down the curve2d
 		var enemy_progress_array = []
@@ -125,7 +128,7 @@ func _fire():
 		readytofire = false
 		enemy = enemy.get_parent()
 		_create_bullet()	
-		await(get_tree().create_timer(GameData.tower_data[type]["rate_of_fire"]).timeout)
+		await(get_tree().create_timer(self.get_parent().turrets_dict[turret_name]["rate_of_fire"]).timeout)
 		readytofire = true	
 	
 #endregion
@@ -150,7 +153,7 @@ func _on_area_2d_mouse_entered():
 		hovering = true
 		hoveredTurretPosition = self.position
 		hoveredTurretName = self.name
-		print("hoveredTurretName " + hoveredTurretName)
+		#print("hoveredTurretName " + hoveredTurretName)
 
 func _on_area_2d_mouse_exited():
 	hovering = false

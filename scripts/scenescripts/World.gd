@@ -8,6 +8,7 @@ var build_valid = false
 var build_location
 var build_type
 var tower_type
+var turret_name_modifier = 2
 #variables for waves
 var enemies_in_wave = 0
 var wavePaused = false
@@ -91,29 +92,44 @@ func _place_tower():
 	if build_valid:
 		var new_tower = load("res://scenes/defenses/" + build_type + ".tscn").instantiate()
 		new_tower.position = build_location
+		#name of tower
 		new_tower.type = build_type
 		new_tower.built = true
+		new_tower.name = build_type
 		get_node("Turrets").add_child(new_tower,true)
+		#name of the tower when it is placed - can see this in remote debugger
+		new_tower.turret_name = build_type
+		print("new_tower.name: " + new_tower.name)
 		
 		#TODO: Convert all instanced of GameData.TowerData to use turrets_dict
 		#turrets_dict contains all currently placed turret stats
 		#GameData.TowerData can be used to modify turret types as a whole
 		match build_type:
-			"Turret1":
-				_turrets_node.turrets_dict[new_tower.name] = {"type": GameData.tower_data[build_type]["group"],
+			"Cannon":
+				#needed if you place multiple turrets that are the same
+				if _turrets_node.turrets_dict.has(new_tower.turret_name):
+					new_tower.turret_name = str(new_tower.turret_name)+ str(turret_name_modifier)
+					turret_name_modifier += 1
+				_turrets_node.turrets_dict[new_tower.turret_name] = {"type": GameData.tower_data[build_type]["group"],
 				"damage": GameData.tower_data[build_type]["damage"],
 				"rate_of_fire": GameData.tower_data[build_type]["rate_of_fire"],
 				"range": GameData.tower_data[build_type]["range"],
 				"bullet_speed": GameData.tower_data[build_type]["bullet_speed"],
 				"cost": GameData.tower_data[build_type]["cost"]}
 			"Turret2":
+				if _turrets_node.turrets_dict.has(new_tower.turret_name):
+					new_tower.turret_name = str(new_tower.turret_name)+ str(turret_name_modifier)
+					turret_name_modifier += 1
 				_turrets_node.turrets_dict[new_tower.name] = {"type": GameData.tower_data[build_type]["group"],
 				"damage": GameData.tower_data[build_type]["damage"],
 				"rate_of_fire": GameData.tower_data[build_type]["rate_of_fire"],
 				"range": GameData.tower_data[build_type]["range"],
 				"bullet_speed": GameData.tower_data[build_type]["bullet_speed"],
 				"cost": GameData.tower_data[build_type]["cost"]}
-			"Turret3":
+			"Armory":
+				if _turrets_node.turrets_dict.has(new_tower.turret_name):
+					new_tower.turret_name = str(new_tower.turret_name)+ str(turret_name_modifier)
+					turret_name_modifier += 1
 				_turrets_node.turrets_dict[new_tower.name] = {"type": GameData.tower_data[build_type]["group"],
 				"damage": GameData.tower_data[build_type]["damage"],
 				"rate_of_fire": GameData.tower_data[build_type]["rate_of_fire"],

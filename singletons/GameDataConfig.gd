@@ -9,11 +9,11 @@ func reset():
 	player_data.player.xp = 0
 	player_data.player.xp_to_level = 10
 	#default values for turret1
-	tower_data["Turret1"]["damage"] = 20
-	tower_data["Turret1"]["rate_of_fire"] = 1.0
-	tower_data["Turret1"]["range"] = 300
-	tower_data["Turret1"]["bullet_speed"] = 850
-	tower_data["Turret1"]["cost"] = 5
+	tower_data["Cannon"]["damage"] = 20
+	tower_data["Cannon"]["rate_of_fire"] = 1.0
+	tower_data["Cannon"]["range"] = 300
+	tower_data["Cannon"]["bullet_speed"] = 850
+	tower_data["Cannon"]["cost"] = 5
 	#default values for turret2
 	tower_data["Turret2"]["damage"] = 30
 	tower_data["Turret2"]["rate_of_fire"] = 1.0
@@ -23,7 +23,7 @@ func reset():
 	
 
 var tower_data = {
-	"Turret1": {
+	"Cannon": {
 		"damage": 20,
 		"rate_of_fire": 1.0,
 		"range": 300,
@@ -37,7 +37,7 @@ var tower_data = {
 		"bullet_speed": 850,
 		"cost": 10,
 		"group":"Defensive"},
-	"Turret3":{
+	"Armory":{
 		"damage": 5,
 		"rate_of_fire":0,
 		"range": 500,

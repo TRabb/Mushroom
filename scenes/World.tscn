@@ -264,7 +264,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qk6yf")
 [node name="Offensive" type="Control" parent="UI/HUD/BuildBar"]
 layout_mode = 2
 
-[node name="Turret1" type="TextureButton" parent="UI/HUD/BuildBar/Offensive" groups=["build_buttons"]]
+[node name="Cannon" type="TextureButton" parent="UI/HUD/BuildBar/Offensive" groups=["build_buttons"]]
 layout_mode = 0
 offset_left = 5.0
 offset_top = -3.0
@@ -286,7 +286,7 @@ texture_normal = ExtResource("8_ouqwp")
 visible = false
 layout_mode = 2
 
-[node name="Turret3" type="TextureButton" parent="UI/HUD/BuildBar/Utility" groups=["build_buttons"]]
+[node name="Armory" type="TextureButton" parent="UI/HUD/BuildBar/Utility" groups=["build_buttons"]]
 layout_mode = 0
 texture_normal = ExtResource("12_2gmao")
 
